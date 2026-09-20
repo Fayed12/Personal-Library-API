@@ -2,31 +2,80 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Personal Library API | Modern RESTful Service</title>
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <title>Personal Library API &bull; Modern RESTful Book Management &amp;
+            Analytics</title>
         <meta name="description"
-            content="High-performance Node.js & MongoDB Personal Library API. Track books, reading progress, and rich analytics with native MongoDB drivers.">
+            content="High-performance Personal Library API built with Node.js, Express 5, and the official MongoDB driver. Features intra-document progress comparison ($expr), multi-stage aggregation, and clean RESTful design.">
+        <meta name="keywords"
+            content="Personal Library API, MongoDB native driver, Express 5, Node.js, RESTful API, books database, reading analytics, developer documentation">
+        <meta name="author" content="Mohamed Fayed">
+        <meta name="robots" content="index, follow">
+        <meta name="theme-color" content="#2D1A12">
+        <!-- Book Favicon -->
+        <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <link rel="alternate icon" type="image/svg+xml"
+            href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM1NDMzMjIiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMkQxQTEyIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJnb2xkR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGNUQwQTkiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjRDRBMzczIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJwYWdlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGRkZGRkYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjRjNFQ0UyIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMTAlIiB5PSItMTAlIiB3aWR0aD0iMTIwJSIgaGVpZ2h0PSIxMjUlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjIiIHN0ZERldmlhdGlvbj0iMiIgZmxvb2QtY29sb3I9IiMwMDAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIFNxdWlyY2xlIC0tPgogIDxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE2IiBmaWxsPSJ1cmwoI2JnR3JhZCkiLz4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iNjIiIGhlaWdodD0iNjIiIHJ4PSIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQjg3MzMzIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuNSIvPgoKICA8IS0tIEJvb2sgUGFnZXMgJiBTcGluZSBHcm91cCAtLT4KICA8ZyBmaWx0ZXI9InVybCgjc2hhZG93KSI+CiAgICA8IS0tIEJhY2sgQ292ZXIgQWNjZW50IC0tPgogICAgPHBhdGggZD0iTTEyIDQzLjUgQzEyIDQzLjUgMTkgNDEuNSAzMiA0NCBDNDUgNDEuNSA1MiA0My41IDUyIDQzLjUgTDUyIDQ2LjUgQzUyIDQ2LjUgNDUgNDQuNSAzMiA0NyBDMTkgNDQuNSAxMiA0Ni41IDEyIDQ2LjUgWiIgZmlsbD0idXJsKCNnb2xkR3JhZCkiLz4KCiAgICA8IS0tIExlZnQgQm9vayBQYWdlIC0tPgogICAgPHBhdGggZD0iTTEzIDE4IEMyMCAxNiAyOCAxNy41IDMyIDIwLjUgTDMyIDQ0IEMyOCA0MSAyMCAzOS41IDEzIDQxLjUgWiIgZmlsbD0idXJsKCNwYWdlR3JhZCkiLz4KCiAgICA8IS0tIFJpZ2h0IEJvb2sgUGFnZSAtLT4KICAgIDxwYXRoIGQ9Ik01MSAxOCBDNDQgMTYgMzYgMTcuNSAzMiAyMC41IEwzMiA0NCBDMzYgNDEgNDQgMzkuNSA1MSA0MS41IFoiIGZpbGw9InVybCgjcGFnZUdyYWQpIi8+CgogICAgPCEtLSBCb29rIENlbnRlciBTZWFtIC8gRm9sZCBMaW5lIC0tPgogICAgPGxpbmUgeDE9IjMyIiB5MT0iMjAuNSIgeDI9IjMyIiB5Mj0iNDQiIHN0cm9rZT0iIzdBNDkyRSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KCiAgICA8IS0tIFBhZ2UgTGluZSBEZXRhaWxzIC0tPgogICAgPHBhdGggZD0iTTE4IDI0LjUgQzIyIDIzLjUgMjYgMjQgMjkgMjUuNSIgc3Ryb2tlPSIjQjg3MzMzIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjYiLz4KICAgIDxwYXRoIGQ9Ik0xOCAyOS41IEMyMiAyOC41IDI2IDI5IDI5IDMwLjUiIHN0cm9rZT0iI0I4NzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC42Ii8+CiAgICA8cGF0aCBkPSJNMTggMzQuNSBDMjIgMzMuNSAyNiAzNCAyOSAzNS41IiBzdHJva2U9IiNCODczMzMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNiIvPgoKICAgIDxwYXRoIGQ9Ik00NiAyNC41IEM0MiAyMy41IDM4IDI0IDM1IDI1LjUiIHN0cm9rZT0iI0I4NzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC42Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjkuNSBDNDIgMjguNSAzOCAyOSAzNSAzMC41IiBzdHJva2U9IiNCODczMzMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNiIvPgogICAgPHBhdGggZD0iTTQ2IDM0LjUgQzQyIDMzLjUgMzggMzQgMzUgMzUuNSIgc3Ryb2tlPSIjQjg3MzMzIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjYiLz4KCiAgICA8IS0tIEJvb2ttYXJrIFJpYmJvbiBIYW5naW5nIERvd24gLS0+CiAgICA8cGF0aCBkPSJNMzAgMTggTDM0IDE4IEwzNCAzMSBMMzIgMjkgTDMwIDMxIFoiIGZpbGw9IiNDNTg5NDAiLz4KICA8L2c+Cjwvc3ZnPgo=">
+        <link rel="canonical" href="http://localhost:4000/">
+
+        <!-- Open Graph / Social SEO -->
+        <meta property="og:type" content="website">
+        <meta property="og:title"
+            content="Personal Library API &bull; Modern RESTful Architecture">
+        <meta property="og:description"
+            content="Explore the official MongoDB Node.js driver Personal Library API with deep querying, reading progress analytics, and aggregation pipelines.">
+        <meta property="og:site_name" content="Personal Library API">
+
+        <!-- Twitter Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title"
+            content="Personal Library API &bull; Modern RESTful Service">
+        <meta name="twitter:description"
+            content="Built with pure MongoDB Node.js driver & Express 5. Zero Mongoose bloat, direct cursor streaming, and multi-stage aggregation analytics.">
+
+        <!-- Fonts & CSS -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
             href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
             rel="stylesheet">
         <link rel="stylesheet" href="index.css">
+
+        <!-- JSON-LD Structured Data for SEO -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Personal Library API",
+          "description": "High-performance Node.js & MongoDB REST API for books management and reading analytics",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "All",
+          "author": {
+            "@type": "Person",
+            "name": "Mohamed Fayed"
+          }
+        }
+        </script>
     </head>
     <body>
 
-        <!-- Ambient Light Blobs -->
-        <div class="ambient-canvas">
+        <!-- Accessible Skip to Main Content -->
+        <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+        <!-- Ambient Light Canvas -->
+        <div class="ambient-canvas" aria-hidden="true">
             <div class="ambient-orb orb-1"></div>
             <div class="ambient-orb orb-2"></div>
             <div class="ambient-orb orb-3"></div>
         </div>
 
         <!-- Sticky Glass Navbar -->
-        <header class="navbar">
+        <header class="navbar" role="banner">
             <div class="container nav-container">
-                <a href="#" class="brand-group">
-                    <div class="brand-icon">
+                <a href="#" class="brand-group"
+                    aria-label="Personal Library API Home">
+                    <div class="brand-icon" aria-hidden="true">
                         <svg width="22" height="22" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -37,14 +86,9 @@
                             <path d="M8 11h6" />
                         </svg>
                     </div>
-                    <div class="brand-text">
-                        <h1>Personal Library API</h1>
-                        <span class="brand-tagline">Native MongoDB Driver &bull;
-                            Express 5</span>
-                    </div>
                 </a>
 
-                <nav>
+                <nav aria-label="Main Desktop Navigation">
                     <ul class="nav-links">
                         <li><a href="#overview"
                                 class="nav-link">Overview</a></li>
@@ -63,436 +107,533 @@
 
                 <div class="nav-actions">
                     <button id="check-health-btn" class="btn-health"
-                        title="Test /api/health endpoint">
-                        <span class="status-dot"></span>
+                        title="Test /api/health endpoint"
+                        aria-label="Check API server health status">
+                        <span class="status-dot" aria-hidden="true"></span>
                         <span>API Health</span>
                     </button>
-                    <a href="#endpoints" class="btn-primary">Explore API</a>
+                    <a href="#endpoints" class="btn-primary"
+                        aria-label="Explore API endpoints">Explore API</a>
+
+                    <!-- Mobile Hamburger Toggle Button -->
+                    <button class="nav-toggle-btn" id="nav-toggle"
+                        aria-label="Toggle navigation menu"
+                        aria-expanded="false" aria-controls="mobile-nav">
+                        <span class="hamburger-bar" aria-hidden="true"></span>
+                        <span class="hamburger-bar" aria-hidden="true"></span>
+                        <span class="hamburger-bar" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
         </header>
 
-        <!-- Hero Section -->
-        <section class="hero" id="overview">
-            <div class="container hero-grid">
-                <div class="hero-content">
-                    <div class="hero-pill">
-                        <svg width="14" height="14" viewBox="0 0 24 24"
-                            fill="currentColor">
-                            <polygon
-                                points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                        </svg>
-                        <span>Production-Ready Node.js Architecture</span>
-                    </div>
+        <!-- Mobile Navigation Menu Drawer -->
+        <nav aria-label="Mobile Navigation" class="mobile-nav-drawer"
+            id="mobile-nav">
+            <ul class="mobile-nav-links">
+                <li><a href="#overview"
+                        class="mobile-nav-link">Overview</a></li>
+                <li><a href="#features"
+                        class="mobile-nav-link">Architecture</a></li>
+                <li><a href="#schema" class="mobile-nav-link">Data
+                        Model</a></li>
+                <li><a href="#endpoints"
+                        class="mobile-nav-link">Endpoints</a></li>
+                <li><a href="#simulator"
+                        class="mobile-nav-link">Simulator</a></li>
+                <li><a href="#quickstart" class="mobile-nav-link">Quick
+                        Start</a></li>
+            </ul>
+            <div class="mobile-drawer-actions">
+                <button id="check-health-btn-mobile" class="btn-health"
+                    aria-label="Check server health">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span>Check Server Health</span>
+                </button>
+                <a href="#endpoints" class="btn-primary"
+                    aria-label="Browse Endpoints">Browse Endpoints</a>
+            </div>
+        </nav>
 
-                    <h1 class="hero-title">
-                        Curate, Track, and Analyze Your <span
-                            class="highlight">Literary Universe</span>
-                    </h1>
+        <!-- Main Content Landmark -->
+        <main id="main-content">
 
-                    <p class="hero-description">
-                        A high-performance RESTful API engineered with the
-                        official MongoDB Node.js driver.
-                        Manage your personal books collection with deep
-                        querying, intra-document reading progress comparisons,
-                        and multi-stage aggregation analytics.
-                    </p>
-
-                    <div class="hero-actions">
-                        <a href="#endpoints" class="btn-primary">
-                            <span>Browse Endpoints</span>
-                            <svg width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2.5" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <polyline points="19 12 12 19 5 12"></polyline>
+            <!-- Hero Section -->
+            <section class="hero" id="overview" aria-labelledby="hero-heading">
+                <div class="container hero-grid">
+                    <div class="hero-content">
+                        <div class="hero-pill" role="button" tabindex="0"
+                            aria-label="Production ready architecture tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="currentColor" aria-hidden="true">
+                                <polygon
+                                    points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                             </svg>
-                        </a>
-                        <a href="#simulator" class="btn-secondary">
-                            <span>Interactive Simulator</span>
-                            <svg width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                        </a>
-                    </div>
+                            <span>Production-Ready Node.js Architecture</span>
+                        </div>
 
-                    <div class="hero-meta-row">
-                        <div class="meta-item">
-                            <span class="meta-val">30+</span>
-                            <span class="meta-label">Total Endpoints</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-val">6</span>
-                            <span class="meta-label">Execution Stages</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-val">0ms</span>
-                            <span class="meta-label">ORM Overhead</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-val">v1.0</span>
-                            <span class="meta-label">Express 5 &bull;
-                                Mongo</span>
-                        </div>
-                    </div>
-                </div>
+                        <h1 class="hero-title" id="hero-heading">
+                            Curate, Track, and Analyze Your <span
+                                class="highlight">Literary Universe</span>
+                        </h1>
 
-                <!-- Hero Interactive Showcase -->
-                <div class="showcase-wrapper">
-                    <div class="showcase-card">
-                        <div class="card-topbar">
-                            <div class="window-dots">
-                                <div class="window-dot red"></div>
-                                <div class="window-dot yellow"></div>
-                                <div class="window-dot green"></div>
-                            </div>
-                            <div class="window-title">
-                                <svg width="14" height="14" viewBox="0 0 24 24"
+                        <p class="hero-description">
+                            A high-performance RESTful API engineered with the
+                            official MongoDB Node.js driver.
+                            Manage your personal books collection with deep
+                            querying, intra-document reading progress
+                            comparisons,
+                            and multi-stage aggregation analytics.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a href="#endpoints" class="btn-primary"
+                                aria-label="Browse API endpoints list">
+                                <span>Browse Endpoints</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <polyline
-                                        points="14 2 14 8 20 8"></polyline>
+                                        points="19 12 12 19 5 12"></polyline>
                                 </svg>
-                                <span>document.book.json</span>
-                            </div>
-                            <div class="window-badge">Status: 200 OK</div>
+                            </a>
+                            <a href="#simulator" class="btn-secondary"
+                                aria-label="Open Interactive Simulator">
+                                <span>Interactive Simulator</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <polygon
+                                        points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                            </a>
                         </div>
 
-                        <pre
-                            class="showcase-body"><code><span class="syn-punct">{</span>
+                        <div class="hero-meta-row">
+                            <div class="meta-item">
+                                <span class="meta-val">30+</span>
+                                <span class="meta-label">Total Endpoints</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-val">6</span>
+                                <span class="meta-label">Execution Stages</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-val">0ms</span>
+                                <span class="meta-label">ORM Overhead</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-val">v1.0</span>
+                                <span class="meta-label">Express 5 &bull;
+                                    Mongo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Showcase Card -->
+                    <div class="showcase-wrapper">
+                        <div class="showcase-card">
+                            <div class="card-topbar">
+                                <div class="window-dots" aria-hidden="true">
+                                    <div class="window-dot red"></div>
+                                    <div class="window-dot yellow"></div>
+                                    <div class="window-dot green"></div>
+                                </div>
+                                <div class="window-title">
+                                    <svg width="14" height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor"
+                                        stroke-width="2" aria-hidden="true">
+                                        <path
+                                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline
+                                            points="14 2 14 8 20 8"></polyline>
+                                    </svg>
+                                    <span>document.book.json</span>
+                                </div>
+                                <div class="window-badge">Status: 200 OK</div>
+                            </div>
+
+                            <pre
+                                class="showcase-body"><code><span class="syn-punct">{</span>
   <span class="syn-key">"_id"</span><span class="syn-punct">:</span> <span class="syn-str">"ObjectId('6745f348e1a5f6a9821c4001')"</span><span class="syn-punct">,</span>
   <span class="syn-key">"title"</span><span class="syn-punct">:</span> <span class="syn-str">"Clean Code"</span><span class="syn-punct">,</span>
   <span class="syn-key">"author"</span><span class="syn-punct">:</span> <span class="syn-str">"Robert C. Martin"</span><span class="syn-punct">,</span>
   <span class="syn-key">"category"</span><span class="syn-punct">:</span> <span class="syn-str">"software-engineering"</span><span class="syn-punct">,</span>
   <span class="syn-key">"pages"</span><span class="syn-punct">:</span> <span class="syn-num">464</span><span class="syn-punct">,</span>
   <span class="syn-key">"pagesRead"</span><span class="syn-punct">:</span> <span class="syn-num">464</span><span class="syn-punct">,</span>
+  <span class="syn-key">"CurrentPage"</span><span class="syn-punct">:</span> <span class="syn-num">464</span><span class="syn-punct">,</span>
   <span class="syn-key">"rating"</span><span class="syn-punct">:</span> <span class="syn-num">4.5</span><span class="syn-punct">,</span>
   <span class="syn-key">"status"</span><span class="syn-punct">:</span> <span class="syn-str">"completed"</span><span class="syn-punct">,</span>
   <span class="syn-key">"publishedYear"</span><span class="syn-punct">:</span> <span class="syn-num">2008</span><span class="syn-punct">,</span>
   <span class="syn-key">"tags"</span><span class="syn-punct">:</span> <span class="syn-punct">[</span><span class="syn-str">"clean-code"</span><span class="syn-punct">,</span> <span class="syn-str">"best-practices"</span><span class="syn-punct">]</span>
 <span class="syn-punct">}</span></code></pre>
 
-                        <!-- Book Live Card Bottom Preview -->
-                        <div class="showcase-widget">
-                            <div class="widget-header">
-                                <span class="widget-book-title">Clean
-                                    Code</span>
-                                <div class="widget-rating">
-                                    <span>&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                                    <span>4.5</span>
+                            <!-- Book Live Card Bottom Preview -->
+                            <div class="showcase-widget">
+                                <div class="widget-header">
+                                    <span class="widget-book-title">Clean
+                                        Code</span>
+                                    <div class="widget-rating"
+                                        aria-label="Rating 4.5 out of 5 stars">
+                                        <span
+                                            aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                        <span>4.5</span>
+                                    </div>
+                                </div>
+                                <div class="progress-info">
+                                    <span>Reading Progress: 464 of 464
+                                        pages</span>
+                                    <strong class="progress-percent">100%
+                                        Completed</strong>
+                                </div>
+                                <div class="progress-track" role="progressbar"
+                                    aria-valuenow="100" aria-valuemin="0"
+                                    aria-valuemax="100">
+                                    <div class="progress-fill"></div>
+                                </div>
+                                <div class="widget-tags">
+                                    <span class="tag-pill">#clean-code</span>
+                                    <span
+                                        class="tag-pill">#best-practices</span>
+                                    <span
+                                        class="tag-pill">#software-engineering</span>
                                 </div>
                             </div>
-                            <div class="progress-info">
-                                <span>Reading Progress: 464 of 464 pages</span>
-                                <strong class="progress-percent">100%
-                                    Completed</strong>
+                        </div>
+
+                        <!-- Floating Badge Chip -->
+                        <div class="floating-chip chip-1" role="complementary"
+                            aria-label="Architecture highlight">
+                            <div class="chip-icon" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <polyline
+                                        points="20 6 9 17 4 12"></polyline>
+                                </svg>
                             </div>
-                            <div class="progress-track">
-                                <div class="progress-fill"></div>
+                            <div class="chip-text">
+                                <h5>Direct Mongo Cursors</h5>
+                                <p>Zero ORM Bloat &bull; Pure Async Node.js</p>
                             </div>
-                            <div class="widget-tags">
-                                <span class="tag-pill">#clean-code</span>
-                                <span class="tag-pill">#best-practices</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architectural Highlights Section -->
+            <section class="section" id="features"
+                aria-labelledby="features-heading">
+                <div class="container">
+                    <div class="section-header reveal-on-scroll">
+                        <span class="section-subtitle">Architectural
+                            Pillars</span>
+                        <h2 class="section-title"
+                            id="features-heading">Engineered for Precision &amp;
+                            Learning</h2>
+                        <p class="section-desc">
+                            Built according to strict production criteria with
+                            the
+                            official MongoDB driver, highlighting pure query
+                            optimization, aggregation mechanics, and clean code
+                            principles.
+                        </p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card reveal-on-scroll"
+                            data-delay="100" tabindex="0">
+                            <div class="feature-icon-box" aria-hidden="true">
+                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <ellipse cx="12" cy="5" rx="9"
+                                        ry="3"></ellipse>
+                                    <path
+                                        d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                    <path
+                                        d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                </svg>
+                            </div>
+                            <h3>Native Driver Power</h3>
+                            <p>
+                                Uses the official MongoDB Node.js driver rather
+                                than Mongoose. Experience direct driver commands
+                                like <code>insertOne()</code>,
+                                <code>find().toArray()</code>, and raw
+                                <code>$set</code> pipelines.
+                            </p>
+                        </div>
+
+                        <div class="feature-card reveal-on-scroll"
+                            data-delay="200" tabindex="0">
+                            <div class="feature-icon-box" aria-hidden="true">
+                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="18" y1="20" x2="18"
+                                        y2="10"></line>
+                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                </svg>
+                            </div>
+                            <h3>Intra-Document Progress</h3>
+                            <p>
+                                Features <code>pagesRead</code> comparison via
+                                MongoDB <code>$expr</code>. Power dynamic
+                                filters like <code>/api/books/unfinished</code>
+                                to evaluate field-against-field values on the
+                                fly.
+                            </p>
+                        </div>
+
+                        <div class="feature-card reveal-on-scroll"
+                            data-delay="300" tabindex="0">
+                            <div class="feature-icon-box" aria-hidden="true">
+                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polygon
+                                        points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                    <polyline
+                                        points="2 17 12 22 22 17"></polyline>
+                                    <polyline
+                                        points="2 12 12 17 22 12"></polyline>
+                                </svg>
+                            </div>
+                            <h3>Multi-Stage Aggregation</h3>
+                            <p>
+                                Extract deep library metrics across categories,
+                                reading statuses, average ratings, and pace
+                                using <code>$match</code>, <code>$group</code>,
+                                and controller-level data reshaping.
+                            </p>
+                        </div>
+
+                        <div class="feature-card reveal-on-scroll"
+                            data-delay="400" tabindex="0">
+                            <div class="feature-icon-box" aria-hidden="true">
+                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                            </div>
+                            <h3>Data Integrity &amp; Quality</h3>
+                            <p>
+                                Equipped with intentional consistency checks
+                                (such as <code>/api/books/inconsistent</code>)
+                                and enum guards for clean categorization and
+                                dependable persistence.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Model / Schema Section -->
+            <section class="section schema-section" id="schema"
+                aria-labelledby="schema-heading">
+                <div class="container">
+                    <div class="section-header reveal-on-scroll">
+                        <span class="section-subtitle">Schema Definition</span>
+                        <h2 class="section-title" id="schema-heading">The Book
+                            Collection Model</h2>
+                        <p class="section-desc">
+                            A single collection named <code>books</code> inside
+                            the <code>personal_library</code> database,
+                            engineered with clear field validation constraints.
+                        </p>
+                    </div>
+
+                    <div class="schema-grid">
+                        <!-- Schema Table -->
+                        <div
+                            class="schema-table-card reveal-on-scroll reveal-left">
+                            <div class="card-header-simple">
+                                <h3>Field Specifications</h3>
+                                <span class="window-badge">Collection:
+                                    books</span>
+                            </div>
+                            <div class="table-scroll-hint"
+                                aria-hidden="true">Swipe horizontally to see
+                                full schema &rarr;</div>
+                            <div class="table-responsive">
+                                <table class="schema-table"
+                                    aria-label="Book Document Field Specifications">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Field</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Constraints &amp;
+                                                Rules</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">title</span></td>
+                                            <td><span
+                                                    class="field-type">String</span></td>
+                                            <td><span
+                                                    class="badge-req">Required</span></td>
+                                            <td>Trimmed, 1 &ndash; 150
+                                                characters</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">author</span></td>
+                                            <td><span
+                                                    class="field-type">String</span></td>
+                                            <td><span
+                                                    class="badge-req">Required</span></td>
+                                            <td>Trimmed, 1 &ndash; 100
+                                                characters</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">category</span></td>
+                                            <td><span
+                                                    class="field-type">String</span></td>
+                                            <td><span
+                                                    class="badge-req">Required</span></td>
+                                            <td><code>programming</code>,
+                                                <code>software-engineering</code>,
+                                                <code>business</code>,
+                                                <code>history</code>,
+                                                <code>science</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">pages</span></td>
+                                            <td><span
+                                                    class="field-type">Integer</span></td>
+                                            <td><span
+                                                    class="badge-req">Required</span></td>
+                                            <td>Range 1 &ndash; 5,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">pagesRead</span></td>
+                                            <td><span
+                                                    class="field-type">Integer</span></td>
+                                            <td><span
+                                                    class="badge-opt">Optional</span></td>
+                                            <td>Default <code>0</code>, range
+                                                between 0 and
+                                                <code>pages</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">CurrentPage</span></td>
+                                            <td><span
+                                                    class="field-type">Integer</span></td>
+                                            <td><span
+                                                    class="badge-opt">Optional</span></td>
+                                            <td>Default <code>0</code>, range
+                                                between 0 and
+                                                <code>pages</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">rating</span></td>
+                                            <td><span
+                                                    class="field-type">Number</span></td>
+                                            <td><span
+                                                    class="badge-opt">Optional</span></td>
+                                            <td>Default <code>0</code>
+                                                (unrated), 0&ndash;5 in steps of
+                                                0.5</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">status</span></td>
+                                            <td><span
+                                                    class="field-type">String</span></td>
+                                            <td><span
+                                                    class="badge-opt">Optional</span></td>
+                                            <td><code>reading</code>,
+                                                <code>completed</code>, or
+                                                <code>planned</code>
+                                                (default)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">publishedYear</span></td>
+                                            <td><span
+                                                    class="field-type">Integer</span></td>
+                                            <td><span
+                                                    class="badge-req">Required</span></td>
+                                            <td>1000 up to current year</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">tags</span></td>
+                                            <td><span
+                                                    class="field-type">Array</span></td>
+                                            <td><span
+                                                    class="badge-opt">Optional</span></td>
+                                            <td>Array of strings, max 5 items,
+                                                lowercase</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span
+                                                    class="field-name">addedAt</span></td>
+                                            <td><span
+                                                    class="field-type">Date</span></td>
+                                            <td><span
+                                                    class="badge-opt">System</span></td>
+                                            <td>Auto-assigned <code>new
+                                                    Date()</code> by server</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Sample Payload Code -->
+                        <div
+                            class="schema-code-card reveal-on-scroll reveal-right">
+                            <div class="code-header">
                                 <span
-                                    class="tag-pill">#software-engineering</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Floating Badge Chip -->
-                    <div class="floating-chip chip-1">
-                        <div class="chip-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2.5">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </div>
-                        <div class="chip-text">
-                            <h5>Direct Mongo Cursors</h5>
-                            <p>Zero ORM Bloat &bull; Pure Async Node.js</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Architectural Highlights Section -->
-        <section class="section" id="features">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-subtitle">Architectural Pillars</span>
-                    <h2 class="section-title">Engineered for Precision &
-                        Learning</h2>
-                    <p class="section-desc">
-                        Built according to strict production criteria with the
-                        official MongoDB driver, highlighting pure query
-                        optimization, aggregation mechanics, and clean code
-                        principles.
-                    </p>
-                </div>
-
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon-box">
-                            <svg width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                <path
-                                    d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                                <path
-                                    d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                            </svg>
-                        </div>
-                        <h3>Native Driver Power</h3>
-                        <p>
-                            Uses the official MongoDB Node.js driver rather than
-                            Mongoose. Experience direct driver commands like
-                            <code>insertOne()</code>,
-                            <code>find().toArray()</code>, and raw
-                            <code>$set</code> pipelines.
-                        </p>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon-box">
-                            <svg width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <line x1="18" y1="20" x2="18" y2="10"></line>
-                                <line x1="12" y1="20" x2="12" y2="4"></line>
-                                <line x1="6" y1="20" x2="6" y2="14"></line>
-                            </svg>
-                        </div>
-                        <h3>Intra-Document Progress</h3>
-                        <p>
-                            Features <code>pagesRead</code> comparison via
-                            MongoDB <code>$expr</code>. Power dynamic filters
-                            like <code>/api/books/unfinished</code> to evaluate
-                            field-against-field values on the fly.
-                        </p>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon-box">
-                            <svg width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon
-                                    points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                <polyline points="2 17 12 22 22 17"></polyline>
-                                <polyline points="2 12 12 17 22 12"></polyline>
-                            </svg>
-                        </div>
-                        <h3>Multi-Stage Aggregation</h3>
-                        <p>
-                            Extract deep library metrics across categories,
-                            reading statuses, average ratings, and pace using
-                            <code>$match</code>, <code>$group</code>, and
-                            controller-level data reshaping.
-                        </p>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon-box">
-                            <svg width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path
-                                    d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                        </div>
-                        <h3>Data Integrity & Quality</h3>
-                        <p>
-                            Equipped with intentional consistency checks (such
-                            as <code>/api/books/inconsistent</code>) and enum
-                            guards for clean categorization and dependable
-                            persistence.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Data Model / Schema Section -->
-        <section class="section schema-section" id="schema">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-subtitle">Schema Definition</span>
-                    <h2 class="section-title">The Book Collection Model</h2>
-                    <p class="section-desc">
-                        A single collection named <code>books</code> inside the
-                        <code>personal_library</code> database, engineered with
-                        clear field validation constraints.
-                    </p>
-                </div>
-
-                <div class="schema-grid">
-                    <!-- Schema Table -->
-                    <div class="schema-table-card">
-                        <div class="card-header-simple">
-                            <h4>Field Specifications</h4>
-                            <span class="window-badge">Collection: books</span>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="schema-table">
-                                <thead>
-                                    <tr>
-                                        <th>Field</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Constraints & Rules</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">title</span></td>
-                                        <td><span
-                                                class="field-type">String</span></td>
-                                        <td><span
-                                                class="badge-req">Required</span></td>
-                                        <td>Trimmed, 1 &ndash; 150
-                                            characters</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">author</span></td>
-                                        <td><span
-                                                class="field-type">String</span></td>
-                                        <td><span
-                                                class="badge-req">Required</span></td>
-                                        <td>Trimmed, 1 &ndash; 100
-                                            characters</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">category</span></td>
-                                        <td><span
-                                                class="field-type">String</span></td>
-                                        <td><span
-                                                class="badge-req">Required</span></td>
-                                        <td><code>programming</code>,
-                                            <code>software-engineering</code>,
-                                            <code>business</code>,
-                                            <code>history</code>,
-                                            <code>science</code></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">pages</span></td>
-                                        <td><span
-                                                class="field-type">Integer</span></td>
-                                        <td><span
-                                                class="badge-req">Required</span></td>
-                                        <td>Range 1 &ndash; 5,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">pagesRead</span></td>
-                                        <td><span
-                                                class="field-type">Integer</span></td>
-                                        <td><span
-                                                class="badge-opt">Optional</span></td>
-                                        <td>Default <code>0</code>, range
-                                            between 0 and
-                                            <code>pages</code></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">rating</span></td>
-                                        <td><span
-                                                class="field-type">Number</span></td>
-                                        <td><span
-                                                class="badge-opt">Optional</span></td>
-                                        <td>Default <code>0</code> (unrated),
-                                            0&ndash;5 in steps of 0.5</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">status</span></td>
-                                        <td><span
-                                                class="field-type">String</span></td>
-                                        <td><span
-                                                class="badge-opt">Optional</span></td>
-                                        <td><code>reading</code>,
-                                            <code>completed</code>, or
-                                            <code>planned</code> (default)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">publishedYear</span></td>
-                                        <td><span
-                                                class="field-type">Integer</span></td>
-                                        <td><span
-                                                class="badge-req">Required</span></td>
-                                        <td>1000 up to current year</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">tags</span></td>
-                                        <td><span
-                                                class="field-type">Array</span></td>
-                                        <td><span
-                                                class="badge-opt">Optional</span></td>
-                                        <td>Array of strings, max 5 items,
-                                            lowercase</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span
-                                                class="field-name">addedAt</span></td>
-                                        <td><span
-                                                class="field-type">Date</span></td>
-                                        <td><span
-                                                class="badge-opt">System</span></td>
-                                        <td>Auto-assigned <code>new
-                                                Date()</code> by server</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Sample Payload Code -->
-                    <div class="schema-code-card">
-                        <div class="code-header">
-                            <span
-                                class="code-filename">sample-payload.json</span>
-                            <button class="btn-copy" data-copy='{
+                                    class="code-filename">sample-payload.json</span>
+                                <button class="btn-copy" data-copy='{
   "title": "Designing Data-Intensive Applications",
   "author": "Martin Kleppmann",
   "category": "software-engineering",
   "pages": 616,
   "pagesRead": 240,
+  "currentPage": 240,
   "rating": 5,
   "status": "reading",
   "publishedYear": 2017,
   "tags": ["distributed-systems", "databases", "architecture"]
-}'>
-                                <svg width="13" height="13" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <rect x="9" y="9" width="13" height="13"
-                                        rx="2" ry="2"></rect>
-                                    <path
-                                        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                </svg>
-                                <span>Copy JSON</span>
-                            </button>
-                        </div>
-                        <pre class="code-content"><code>{
+}' aria-label="Copy sample JSON book document">
+                                    <svg width="13" height="13"
+                                        viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2"
+                                        aria-hidden="true">
+                                        <rect x="9" y="9" width="13" height="13"
+                                            rx="2" ry="2"></rect>
+                                        <path
+                                            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span>Copy JSON</span>
+                                </button>
+                            </div>
+                            <pre class="code-content"><code>{
   <span class="syn-key">"title"</span>: <span class="syn-str">"Designing Data-Intensive Applications"</span>,
   <span class="syn-key">"author"</span>: <span class="syn-str">"Martin Kleppmann"</span>,
   <span class="syn-key">"category"</span>: <span class="syn-str">"software-engineering"</span>,
   <span class="syn-key">"pages"</span>: <span class="syn-num">616</span>,
   <span class="syn-key">"pagesRead"</span>: <span class="syn-num">240</span>,
+  <span class="syn-key">"currentPage</span>: <span class="syn-num">240</span>,
   <span class="syn-key">"rating"</span>: <span class="syn-num">5.0</span>,
   <span class="syn-key">"status"</span>: <span class="syn-str">"reading"</span>,
   <span class="syn-key">"publishedYear"</span>: <span class="syn-num">2017</span>,
@@ -502,503 +643,609 @@
     <span class="syn-str">"architecture"</span>
   ]
 }</code></pre>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Endpoints Explorer Section -->
-        <section class="section" id="endpoints">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-subtitle">API Documentation</span>
-                    <h2 class="section-title">Route & Endpoint Directory</h2>
-                    <p class="section-desc">
-                        Click any endpoint to preview its execution in the
-                        simulator below, or copy its exact route pattern.
-                    </p>
-                </div>
-
-                <!-- Stage Filter Tabs -->
-                <div class="api-tabs-bar">
-                    <button class="tab-pill active" data-filter="all">All
-                        Routes</button>
-                    <button class="tab-pill" data-filter="stage-1">Stage 1: Core
-                        CRUD</button>
-                    <button class="tab-pill" data-filter="stage-2">Stage 2:
-                        Queries & Pagination</button>
-                    <button class="tab-pill" data-filter="stage-3">Stage 3:
-                        Advanced & $expr</button>
-                    <button class="tab-pill" data-filter="stage-4">Stage 4:
-                        Updates</button>
-                    <button class="tab-pill" data-filter="stage-5">Stage 5: Bulk
-                        & Deletions</button>
-                    <button class="tab-pill" data-filter="stage-6">Stage 6:
-                        Aggregations</button>
-                </div>
-
-                <!-- Cards Grid -->
-                <div class="api-grid" id="api-cards-container">
-
-                    <!-- Stage 1 -->
-                    <div class="api-card" data-stage="stage-1">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 1</span>
-                        </div>
-                        <div class="api-route">/api/health</div>
-                        <div class="api-desc">System health check verification.
-                            Confirms MongoDB connection and Express
-                            readiness.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">No Auth &bull; 200
-                                OK</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/health"
-                                title="Copy Route">Copy</button>
-                        </div>
+            <!-- Endpoints Explorer Section -->
+            <section class="section" id="endpoints"
+                aria-labelledby="endpoints-heading">
+                <div class="container">
+                    <div class="section-header reveal-on-scroll">
+                        <span class="section-subtitle">API Documentation</span>
+                        <h2 class="section-title" id="endpoints-heading">Route
+                            &amp; Endpoint Directory</h2>
+                        <p class="section-desc">
+                            Click any endpoint to preview its execution in the
+                            simulator below, or copy its exact route pattern.
+                        </p>
                     </div>
 
-                    <div class="api-card" data-stage="stage-1">
-                        <div class="api-card-top">
-                            <span class="method-tag method-post">POST</span>
-                            <span class="stage-badge">Stage 1</span>
+                    <!-- Redesigned Modern Stages Navigation -->
+                    <div class="stages-nav-wrapper reveal-on-scroll"
+                        role="navigation" aria-label="API Stages Filter">
+                        <button class="stage-arrow-btn prev" id="stage-prev"
+                            aria-label="Previous stages"
+                            title="Scroll left">&#8249;</button>
+
+                        <div class="stages-scroll-track" id="stage-track"
+                            role="tablist">
+                            <button class="tab-pill active" data-filter="all"
+                                role="tab" aria-selected="true"
+                                aria-pressed="true">
+                                <span>All Routes</span>
+                                <span class="pill-counter">19</span>
+                            </button>
+                            <button class="tab-pill" data-filter="stage-1"
+                                role="tab" aria-selected="false"
+                                aria-pressed="false">
+                                <span>Stage 1: Core CRUD</span>
+                                <span class="pill-counter">5</span>
+                            </button>
+                            <button class="tab-pill" data-filter="stage-2"
+                                role="tab" aria-selected="false"
+                                aria-pressed="false">
+                                <span>Stage 2: Queries &amp; Pagination</span>
+                                <span class="pill-counter">4</span>
+                            </button>
+                            <button class="tab-pill" data-filter="stage-3"
+                                role="tab" aria-selected="false"
+                                aria-pressed="false">
+                                <span>Stage 3: Advanced &amp; $expr</span>
+                                <span class="pill-counter">3</span>
+                            </button>
+                            <button class="tab-pill" data-filter="stage-4"
+                                role="tab" aria-selected="false"
+                                aria-pressed="false">
+                                <span>Stage 4: Updates</span>
+                                <span class="pill-counter">3</span>
+                            </button>
+                            <button class="tab-pill" data-filter="stage-5"
+                                role="tab" aria-selected="false"
+                                aria-pressed="false">
+                                <span>Stage 5: Bulk &amp; Deletions</span>
+                                <span class="pill-counter">2</span>
+                            </button>
+                            <button class="tab-pill" data-filter="stage-6"
+                                role="tab" aria-selected="false"
+                                aria-pressed="false">
+                                <span>Stage 6: Aggregations</span>
+                                <span class="pill-counter">2</span>
+                            </button>
                         </div>
-                        <div class="api-route">/api/books</div>
-                        <div class="api-desc">Create a single book in the
-                            library with validated fields and auto-generated
-                            timestamp.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">201 Created</span>
-                            <button class="btn-mini-copy" data-copy="/api/books"
-                                title="Copy Route">Copy</button>
-                        </div>
+
+                        <button class="stage-arrow-btn next" id="stage-next"
+                            aria-label="Next stages"
+                            title="Scroll right">&#8250;</button>
                     </div>
 
-                    <div class="api-card" data-stage="stage-1">
-                        <div class="api-card-top">
-                            <span class="method-tag method-post">POST</span>
-                            <span class="stage-badge">Stage 1</span>
+                    <!-- Cards Grid -->
+                    <div class="api-grid" id="api-cards-container">
+
+                        <!-- Stage 1 -->
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-1" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 1</span>
+                            </div>
+                            <div class="api-route">/api/health</div>
+                            <div class="api-desc">System health check
+                                verification. Confirms MongoDB connection and
+                                Express readiness.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">No Auth &bull; 200
+                                    OK</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/health" title="Copy Route"
+                                    aria-label="Copy route /api/health">Copy</button>
+                            </div>
                         </div>
-                        <div class="api-route">/api/books/bulk</div>
-                        <div class="api-desc">Seed or bulk-create multiple book
-                            documents in a single atomic database trip.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">201 Created &bull;
-                                insertMany()</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/bulk"
-                                title="Copy Route">Copy</button>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-1" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-post">POST</span>
+                                <span class="stage-badge">Stage 1</span>
+                            </div>
+                            <div class="api-route">/api/books</div>
+                            <div class="api-desc">Create a single book in the
+                                library with validated fields and auto-generated
+                                timestamp.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">201 Created</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books" title="Copy Route"
+                                    aria-label="Copy route /api/books">Copy</button>
+                            </div>
                         </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-1" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-post">POST</span>
+                                <span class="stage-badge">Stage 1</span>
+                            </div>
+                            <div class="api-route">/api/books/bulk</div>
+                            <div class="api-desc">Seed or bulk-create multiple
+                                book documents in a single atomic database
+                                trip.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">201 Created &bull;
+                                    insertMany()</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/bulk"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/bulk">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-1" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 1</span>
+                            </div>
+                            <div class="api-route">/api/books</div>
+                            <div class="api-desc">Retrieve all books in the
+                                personal library as an array cursor.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">200 OK &bull;
+                                    find().toArray()</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books" title="Copy Route"
+                                    aria-label="Copy route /api/books">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-1" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 1</span>
+                            </div>
+                            <div class="api-route">/api/books/:id</div>
+                            <div class="api-desc">Fetch a single book by
+                                converting string ID to native MongoDB
+                                ObjectId.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">200 OK / 404 Not
+                                    Found</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/:id"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/:id">Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- Stage 2 -->
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-2" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 2</span>
+                            </div>
+                            <div class="api-route">/api/books/top-rated</div>
+                            <div class="api-desc">Filter books with highest
+                                reviews, sorted by rating descending (5.0
+                                &darr;).</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Curated &bull;
+                                    rating &gt; 0</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/top-rated"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/top-rated">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-2" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 2</span>
+                            </div>
+                            <div class="api-route">/api/books/recent</div>
+                            <div class="api-desc">Recently added books sorted by
+                                <code>addedAt</code> descending.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Curated &bull; Sort
+                                    -1</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/recent"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/recent">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-2" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 2</span>
+                            </div>
+                            <div
+                                class="api-route">/api/books?category=&amp;status=&amp;author=</div>
+                            <div class="api-desc">Exact match and
+                                <code>$ne</code> filters supporting multiple
+                                search criteria.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Query params
+                                    filtering</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books?category=&status=&author="
+                                    title="Copy Route"
+                                    aria-label="Copy filter route">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-2" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 2</span>
+                            </div>
+                            <div
+                                class="api-route">/api/books?page=1&amp;limit=10&amp;sort=-publishedYear</div>
+                            <div class="api-desc">Cursor-based pagination with
+                                <code>skip()</code>, <code>limit()</code>, and
+                                multi-field sorting.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Pagination &bull;
+                                    Projection</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books?page=1&limit=10"
+                                    title="Copy Route"
+                                    aria-label="Copy pagination route">Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- Stage 3 -->
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-3" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 3</span>
+                            </div>
+                            <div class="api-route">/api/books/unfinished</div>
+                            <div class="api-desc">Intra-document comparison via
+                                <code>$expr: { $lt: ["$pagesRead", "$pages"]
+                                    }</code>.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Advanced &bull;
+                                    $expr</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/unfinished"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/unfinished">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-3" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 3</span>
+                            </div>
+                            <div class="api-route">/api/books/inconsistent</div>
+                            <div class="api-desc">Data-quality probe finding
+                                status conflicts (e.g., marked completed but
+                                pagesRead &lt; pages).</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Integrity &bull;
+                                    $expr + $or</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/inconsistent"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/inconsistent">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-3" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 3</span>
+                            </div>
+                            <div class="api-route">/api/books/must-reads</div>
+                            <div class="api-desc">High priority catalog query
+                                combining <code>$and</code> logic across ratings
+                                and tags.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Logical &bull;
+                                    $and</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/must-reads"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/must-reads">Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- Stage 4 -->
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-4" tabindex="0">
+                            <div class="api-card-top">
+                                <span
+                                    class="method-tag method-patch">PATCH</span>
+                                <span class="stage-badge">Stage 4</span>
+                            </div>
+                            <div class="api-route">/api/books/:id/rating</div>
+                            <div class="api-desc">Single field atomic update
+                                modifying only the user rating with range
+                                validation.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">updateOne() &bull;
+                                    $set</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/:id/rating"
+                                    title="Copy Route"
+                                    aria-label="Copy route rating">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-4" tabindex="0">
+                            <div class="api-card-top">
+                                <span
+                                    class="method-tag method-patch">PATCH</span>
+                                <span class="stage-badge">Stage 4</span>
+                            </div>
+                            <div class="api-route">/api/books/:id/progress</div>
+                            <div class="api-desc">Update pages read with
+                                automatic status synchronization (marking
+                                completed when done).</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Atomic &bull;
+                                    Validation</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/:id/progress"
+                                    title="Copy Route"
+                                    aria-label="Copy route progress">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-4" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-put">PUT</span>
+                                <span class="stage-badge">Stage 4</span>
+                            </div>
+                            <div class="api-route">/api/books/:id</div>
+                            <div class="api-desc">Complete document replacement
+                                enforcing strict schema validation.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">replaceOne()</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/:id"
+                                    title="Copy Route"
+                                    aria-label="Copy route replace">Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- Stage 5 -->
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-5" tabindex="0">
+                            <div class="api-card-top">
+                                <span
+                                    class="method-tag method-delete">DELETE</span>
+                                <span class="stage-badge">Stage 5</span>
+                            </div>
+                            <div class="api-route">/api/books/:id</div>
+                            <div class="api-desc">Delete a single book document
+                                by its unique MongoDB ObjectId.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">deleteOne()</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/:id"
+                                    title="Copy Route"
+                                    aria-label="Copy route delete one">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-5" tabindex="0">
+                            <div class="api-card-top">
+                                <span
+                                    class="method-tag method-delete">DELETE</span>
+                                <span class="stage-badge">Stage 5</span>
+                            </div>
+                            <div class="api-route">/api/books/bulk</div>
+                            <div class="api-desc">Batch delete books matching
+                                specific query criteria or tags.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">deleteMany()</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/bulk"
+                                    title="Copy Route"
+                                    aria-label="Copy route delete bulk">Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- Stage 6 -->
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-6" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 6</span>
+                            </div>
+                            <div class="api-route">/api/stats/by-category</div>
+                            <div class="api-desc">MongoDB <code>$group</code>
+                                aggregation returning books count and average
+                                rating per category.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Aggregation &bull;
+                                    $group</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/stats/by-category"
+                                    title="Copy Route"
+                                    aria-label="Copy route stats by category">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-6" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 6</span>
+                            </div>
+                            <div class="api-route">/api/stats/reading-pace</div>
+                            <div class="api-desc">Calculates total pages read vs
+                                planned and computes overall completion
+                                ratios.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Aggregation &bull;
+                                    Metrics</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/stats/reading-pace"
+                                    title="Copy Route"
+                                    aria-label="Copy route reading pace">Copy</button>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="api-card" data-stage="stage-1">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 1</span>
+                    <!-- Live Interactive Simulator Drawer -->
+                    <div class="simulator-box reveal-on-scroll reveal-scale"
+                        id="simulator" aria-labelledby="sim-heading">
+                        <div class="sim-header">
+                            <div>
+                                <h3 id="sim-heading">API Interactive Tester</h3>
+                                <p class="sim-desc">
+                                    Test live or simulated responses for any
+                                    registered endpoint.
+                                </p>
+                            </div>
+                            <span class="window-badge">Client Simulation
+                                Engine</span>
                         </div>
-                        <div class="api-route">/api/books</div>
-                        <div class="api-desc">Retrieve all books in the personal
-                            library as an array cursor.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">200 OK &bull;
-                                find().toArray()</span>
-                            <button class="btn-mini-copy" data-copy="/api/books"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
 
-                    <div class="api-card" data-stage="stage-1">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 1</span>
+                        <div class="sim-controls">
+                            <select id="sim-method" class="sim-method-select"
+                                title="Select HTTP Method"
+                                aria-label="Select HTTP Method">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                            </select>
+                            <input type="text" id="sim-url"
+                                class="sim-url-input"
+                                value="/api/books/top-rated"
+                                placeholder="/api/books/..."
+                                title="API Endpoint URL"
+                                aria-label="API Endpoint URL">
+                            <button id="sim-send" class="btn-send"
+                                aria-label="Send API Request">Send
+                                Request</button>
                         </div>
-                        <div class="api-route">/api/books/:id</div>
-                        <div class="api-desc">Fetch a single book by converting
-                            string ID to native MongoDB ObjectId.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">200 OK / 404 Not
-                                Found</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/:id"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
 
-                    <!-- Stage 2 -->
-                    <div class="api-card" data-stage="stage-2">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 2</span>
-                        </div>
-                        <div class="api-route">/api/books/top-rated</div>
-                        <div class="api-desc">Filter books with highest reviews,
-                            sorted by rating descending (5.0 &darr;).</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Curated &bull; rating
-                                &gt; 0</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/top-rated"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-2">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 2</span>
-                        </div>
-                        <div class="api-route">/api/books/recent</div>
-                        <div class="api-desc">Recently added books sorted by
-                            <code>addedAt</code> descending.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Curated &bull; Sort
-                                -1</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/recent"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-2">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 2</span>
-                        </div>
-                        <div
-                            class="api-route">/api/books?category=&amp;status=&amp;author=</div>
-                        <div class="api-desc">Exact match and <code>$ne</code>
-                            filters supporting multiple search criteria.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Query params
-                                filtering</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books?category=&status=&author="
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-2">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 2</span>
-                        </div>
-                        <div
-                            class="api-route">/api/books?page=1&amp;limit=10&amp;sort=-publishedYear</div>
-                        <div class="api-desc">Cursor-based pagination with
-                            <code>skip()</code>, <code>limit()</code>, and
-                            multi-field sorting.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Pagination &bull;
-                                Projection</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books?page=1&limit=10"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <!-- Stage 3 -->
-                    <div class="api-card" data-stage="stage-3">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 3</span>
-                        </div>
-                        <div class="api-route">/api/books/unfinished</div>
-                        <div class="api-desc">Intra-document comparison via
-                            <code>$expr: { $lt: ["$pagesRead", "$pages"]
-                                }</code>.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Advanced &bull;
-                                $expr</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/unfinished"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-3">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 3</span>
-                        </div>
-                        <div class="api-route">/api/books/inconsistent</div>
-                        <div class="api-desc">Data-quality probe finding status
-                            conflicts (e.g., marked completed but pagesRead &lt;
-                            pages).</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Integrity &bull; $expr +
-                                $or</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/inconsistent"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-3">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 3</span>
-                        </div>
-                        <div class="api-route">/api/books/must-reads</div>
-                        <div class="api-desc">High priority catalog query
-                            combining <code>$and</code> logic across ratings and
-                            tags.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Logical &bull;
-                                $and</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/must-reads"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <!-- Stage 4 -->
-                    <div class="api-card" data-stage="stage-4">
-                        <div class="api-card-top">
-                            <span class="method-tag method-patch">PATCH</span>
-                            <span class="stage-badge">Stage 4</span>
-                        </div>
-                        <div class="api-route">/api/books/:id/rating</div>
-                        <div class="api-desc">Single field atomic update
-                            modifying only the user rating with range
-                            validation.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">updateOne() &bull;
-                                $set</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/:id/rating"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-4">
-                        <div class="api-card-top">
-                            <span class="method-tag method-patch">PATCH</span>
-                            <span class="stage-badge">Stage 4</span>
-                        </div>
-                        <div class="api-route">/api/books/:id/progress</div>
-                        <div class="api-desc">Update pages read with automatic
-                            status synchronization (marking completed when
-                            done).</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Atomic &bull;
-                                Validation</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/:id/progress"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-4">
-                        <div class="api-card-top">
-                            <span class="method-tag method-put">PUT</span>
-                            <span class="stage-badge">Stage 4</span>
-                        </div>
-                        <div class="api-route">/api/books/:id</div>
-                        <div class="api-desc">Complete document replacement
-                            enforcing strict schema validation.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">replaceOne()</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/:id"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <!-- Stage 5 -->
-                    <div class="api-card" data-stage="stage-5">
-                        <div class="api-card-top">
-                            <span class="method-tag method-delete">DELETE</span>
-                            <span class="stage-badge">Stage 5</span>
-                        </div>
-                        <div class="api-route">/api/books/:id</div>
-                        <div class="api-desc">Delete a single book document by
-                            its unique MongoDB ObjectId.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">deleteOne()</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/:id"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-5">
-                        <div class="api-card-top">
-                            <span class="method-tag method-delete">DELETE</span>
-                            <span class="stage-badge">Stage 5</span>
-                        </div>
-                        <div class="api-route">/api/books/bulk</div>
-                        <div class="api-desc">Batch delete books matching
-                            specific query criteria or tags.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">deleteMany()</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/books/bulk"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <!-- Stage 6 -->
-                    <div class="api-card" data-stage="stage-6">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 6</span>
-                        </div>
-                        <div class="api-route">/api/stats/by-category</div>
-                        <div class="api-desc">MongoDB <code>$group</code>
-                            aggregation returning books count and average rating
-                            per category.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Aggregation &bull;
-                                $group</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/stats/by-category"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="api-card" data-stage="stage-6">
-                        <div class="api-card-top">
-                            <span class="method-tag method-get">GET</span>
-                            <span class="stage-badge">Stage 6</span>
-                        </div>
-                        <div class="api-route">/api/stats/reading-pace</div>
-                        <div class="api-desc">Calculates total pages read vs
-                            planned and computes overall completion
-                            ratios.</div>
-                        <div class="api-card-footer">
-                            <span class="api-pill-info">Aggregation &bull;
-                                Metrics</span>
-                            <button class="btn-mini-copy"
-                                data-copy="/api/stats/reading-pace"
-                                title="Copy Route">Copy</button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Live Interactive Simulator Drawer -->
-                <div class="simulator-box" id="simulator">
-                    <div class="sim-header">
-                        <div>
-                            <h3>API Interactive Tester</h3>
-                            <p class="sim-desc">
-                                Test live or simulated responses for any
-                                registered endpoint.
-                            </p>
-                        </div>
-                        <span class="window-badge">Client Simulation
-                            Engine</span>
-                    </div>
-
-                    <div class="sim-controls">
-                        <select id="sim-method" class="sim-method-select"
-                            title="Select HTTP Method"
-                            aria-label="Select HTTP Method">
-                            <option value="GET">GET</option>
-                            <option value="POST">POST</option>
-                            <option value="PATCH">PATCH</option>
-                            <option value="PUT">PUT</option>
-                            <option value="DELETE">DELETE</option>
-                        </select>
-                        <input type="text" id="sim-url" class="sim-url-input"
-                            value="/api/books/top-rated"
-                            placeholder="/api/books/..."
-                            title="API Endpoint URL"
-                            aria-label="API Endpoint URL">
-                        <button id="sim-send" class="btn-send">Send
-                            Request</button>
-                    </div>
-
-                    <pre id="sim-output" class="sim-output">{
+                        <pre id="sim-output" class="sim-output"
+                            aria-live="polite"
+                            aria-label="API response preview">{
   <span class="syn-comment">// Click "Send Request" or select any endpoint above to execute</span>
   <span class="syn-key">"status"</span>: <span class="syn-str">"ready"</span>,
   <span class="syn-key">"tip"</span>: <span class="syn-str">"Try /api/health or /api/books/unfinished"</span>
 }</pre>
+                    </div>
+
                 </div>
+            </section>
 
-            </div>
-        </section>
+            <!-- Quick Start Section -->
+            <section class="section quickstart-section" id="quickstart"
+                aria-labelledby="quickstart-heading">
+                <div class="container">
+                    <div class="section-header reveal-on-scroll">
+                        <span class="section-subtitle">Developer Workflow</span>
+                        <h2 class="section-title" id="quickstart-heading">Get
+                            Started in 4 Easy Steps</h2>
+                        <p class="section-desc">
+                            Spin up the server, connect your local MongoDB
+                            instance,
+                            and seed test books in under two minutes.
+                        </p>
+                    </div>
 
-        <!-- Quick Start Section -->
-        <section class="section quickstart-section" id="quickstart">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-subtitle">Developer Workflow</span>
-                    <h2 class="section-title">Get Started in 4 Easy Steps</h2>
-                    <p class="section-desc">
-                        Spin up the server, connect your local MongoDB instance,
-                        and seed test books in under two minutes.
-                    </p>
+                    <div class="steps-container">
+                        <div class="step-card reveal-on-scroll" data-delay="100"
+                            tabindex="0">
+                            <div class="step-number" aria-hidden="true">1</div>
+                            <h3>Install Dependencies</h3>
+                            <p>Installs Express 5, MongoDB native driver,
+                                Helmet, and development utilities.</p>
+                            <div class="cmd-box">
+                                <code>npm install</code>
+                                <button data-copy="npm install"
+                                    aria-label="Copy npm install command">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="step-card reveal-on-scroll" data-delay="200"
+                            tabindex="0">
+                            <div class="step-number" aria-hidden="true">2</div>
+                            <h3>Configure Environment</h3>
+                            <p>Copy <code>.example.env</code> to
+                                <code>.env</code> and specify your MongoDB
+                                connection URI and PORT.</p>
+                            <div class="cmd-box">
+                                <code>cp .example.env .env</code>
+                                <button data-copy="cp .example.env .env"
+                                    aria-label="Copy env config command">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="step-card reveal-on-scroll" data-delay="300"
+                            tabindex="0">
+                            <div class="step-number" aria-hidden="true">3</div>
+                            <h3>Launch with Nodemon</h3>
+                            <p>Start the development server with live reload and
+                                automatic environment injection.</p>
+                            <div class="cmd-box">
+                                <code>npm start</code>
+                                <button data-copy="npm start"
+                                    aria-label="Copy npm start command">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="step-card reveal-on-scroll" data-delay="400"
+                            tabindex="0">
+                            <div class="step-number" aria-hidden="true">4</div>
+                            <h3>Verify System Health</h3>
+                            <p>Hit the health endpoint to confirm server and
+                                MongoDB connection status.</p>
+                            <div class="cmd-box">
+                                <code>curl
+                                    http://localhost:4000/api/health</code>
+                                <button
+                                    data-copy="curl http://localhost:4000/api/health"
+                                    aria-label="Copy curl health check command">Copy</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-                <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <h4>Install Dependencies</h4>
-                        <p>Installs Express 5, MongoDB native driver, Helmet,
-                            and development utilities.</p>
-                        <div class="cmd-box">
-                            <code>npm install</code>
-                            <button data-copy="npm install">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <h4>Configure Environment</h4>
-                        <p>Copy <code>.example.env</code> to <code>.env</code>
-                            and specify your MongoDB connection URI and
-                            PORT.</p>
-                        <div class="cmd-box">
-                            <code>cp .example.env .env</code>
-                            <button
-                                data-copy="cp .example.env .env">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <h4>Launch with Nodemon</h4>
-                        <p>Start the development server with live reload and
-                            automatic environment injection.</p>
-                        <div class="cmd-box">
-                            <code>npm start</code>
-                            <button data-copy="npm start">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="step-card">
-                        <div class="step-number">4</div>
-                        <h4>Verify System Health</h4>
-                        <p>Hit the health endpoint to confirm server and MongoDB
-                            connection status.</p>
-                        <div class="cmd-box">
-                            <code>curl http://localhost:4000/api/health</code>
-                            <button
-                                data-copy="curl http://localhost:4000/api/health">Copy</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </main>
 
         <!-- Modern Luxury Footer -->
-        <footer class="footer">
+        <footer class="footer" role="contentinfo">
             <div class="container">
                 <div class="footer-grid">
                     <div class="footer-brand">
-                        <h3>Personal Library API</h3>
+                        <h2>Personal Library API</h2>
                         <p>
                             An educational and production-grade RESTful API
-                            built with the official MongoDB Node.js driver.
+                            built
+                            with the official MongoDB Node.js driver.
                             Engineered with clean architectural patterns, robust
                             error handling, and rich aggregation analytics.
                         </p>
                     </div>
 
                     <div class="footer-col">
-                        <h4>Key Resources</h4>
+                        <h3>Key Resources</h3>
                         <ul class="footer-links">
                             <li><a href="#overview">Project Overview</a></li>
                             <li><a href="#schema">Book Schema &amp;
@@ -1011,15 +1258,20 @@
                     </div>
 
                     <div class="footer-col">
-                        <h4>Project Details</h4>
+                        <h3>Project Details</h3>
                         <ul class="footer-links">
                             <li><a
                                     href="https://github.com/Fayed12/Personal-Library-API"
-                                    target="_blank" rel="noopener">GitHub
+                                    target="_blank" rel="noopener"
+                                    aria-label="Personal Library API GitHub Repository">GitHub
                                     Repository</a></li>
                             <li><a href="#quickstart">Quick Start Guide</a></li>
-                            <li><span class="footer-meta-text">Author: Mohamed
-                                    Fayed</span></li>
+                            <li><a
+                                    href="https://mohamed-fayed-porfile.vercel.app/"
+                                    target="_blank" rel="noopener"
+                                    aria-label="Personal Library API GitHub Repository">Author:
+                                    Mohamed
+                                    Fayed</a></li>
                             <li><span class="footer-meta-text">License:
                                     MIT</span></li>
                         </ul>
@@ -1027,8 +1279,7 @@
                 </div>
 
                 <div class="footer-bottom">
-                    <div>&copy; 2026 Personal Library API. Built for modern
-                        backend developers.</div>
+                    <div>&copy; 2026 Personal Library API. Mohamed Fayed.</div>
                     <div class="footer-tech-stack">Node.js &bull; Express 5
                         &bull; MongoDB</div>
                 </div>

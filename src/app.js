@@ -31,6 +31,11 @@ const welcomePath = path.join(__dirname, "components", "welcome-page")
 app.use(express.static(welcomePath))
 app.use("/components", express.static(path.join(__dirname, "components")))
 
+// Favicon explicit route
+app.get(["/favicon.ico", "/favicon.svg"], (req, res) => {
+    res.type("image/svg+xml").sendFile(path.join(welcomePath, "favicon.svg"))
+})
+
 // System health check route
 app.get("/api/health", (req, res) => {
     res.status(200).json({
