@@ -1,3 +1,6 @@
+// local
+const booksRouter = require("./routes/booksRouters")
+
 // 3rd library
 const express = require("express")
 const cors = require("cors")
@@ -23,13 +26,13 @@ app.use(helmet({
     }
 }))
 
-// Body parser
-app.use(express.json())
-
 // Serve static assets from the welcome-page directory
 const welcomePath = path.join(__dirname, "components", "welcome-page")
 app.use(express.static(welcomePath))
 app.use("/components", express.static(path.join(__dirname, "components")))
+
+// main router
+app.use("/api/books", booksRouter)
 
 // Favicon explicit route
 app.get(["/favicon.ico", "/favicon.svg"], (req, res) => {
