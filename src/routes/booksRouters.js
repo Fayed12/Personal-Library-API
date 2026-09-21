@@ -10,16 +10,22 @@ const getRecentBooks = require("../controllers/get-method/getRecentBooks")
 const getTopRatedBooks = require("../controllers/get-method/getTopRated")
 const getUnfinishedBooks = require("../controllers/get-method/getUnfinishedBooks")
 const getWeekendReads = require("../controllers/get-method/getWeekendReads")
+
 const createNewBook = require("../controllers/post-method/createNewBook")
 const createBulkBooks = require("../controllers/post-method/createNewBulkBooks")
+
+const updateRating = require("../controllers/update-method/updateRating")
+const updateBook = require("../controllers/update-method/updateBook")
+const updateAllBook = require("../controllers/update-method/updateAllBook")
+const updateProgress = require("../controllers/update-method/updateProgress")
+const updateCategory = require("../controllers/update-method/updateCategory")
+
+const deleteOne = require("../controllers/delete-method/deleteOne")
+const deleteAll = require("../controllers/delete-method/deleteAll")
 
 // express
 const express = require("express")
 const fs = require("node:fs")
-const checkAllowedFields = require("../services/checkAllowedFields")
-const updateRating = require("../controllers/update-method/updateRating")
-const updateBook = require("../controllers/update-method/updateBook")
-const updateAllBook = require("../controllers/post-method/updateAllBook")
 
 const booksData = JSON.parse(fs.readFileSync(`${__dirname}/../../booksData.json`, "utf-8"))
 
@@ -49,7 +55,6 @@ booksRouter.param("id", (req, res, next, id) => {
 
 // validate fields before start update 
 const validateFields = (req, res, next) => {
-    const id = req.params.id
     const reqBody = req.body
 
     if (!reqBody) {
@@ -103,25 +108,28 @@ const validateFields = (req, res, next) => {
 booksRouter.post("/", createNewBook)
 booksRouter.post("/bulk", createBulkBooks)
 
-
 // get
 booksRouter.get("/", getAllBooks)
 booksRouter.get("/category/:category", getBookByCategory)
 booksRouter.get("/top-rated", getTopRatedBooks)
 booksRouter.get("/recent", getRecentBooks)
 booksRouter.get("/must-reads", getMustReadsBooks)
-booksRouter.get("/not-heavy", getNotHeavyBooks )
-booksRouter.get("/weekend-reads", getWeekendReads )
-booksRouter.get("/next-up", getNextUpBooks )
-booksRouter.get("/unfinished", getUnfinishedBooks )
-booksRouter.get("/inconsistent", getInconsistentBooks )
+booksRouter.get("/not-heavy", getNotHeavyBooks)
+booksRouter.get("/weekend-reads", getWeekendReads)
+booksRouter.get("/next-up", getNextUpBooks)
+booksRouter.get("/unfinished", getUnfinishedBooks)
+booksRouter.get("/inconsistent", getInconsistentBooks)
 booksRouter.get("/:id", getBookById)
 
 // update
+booksRouter.patch("/bulk/category", updateCategory)
 booksRouter.patch("/:id/rating", updateRating)
+booksRouter.patch("/:id/progress", updateProgress)
 booksRouter.patch("/:id", validateFields, updateBook)
 booksRouter.put("/:id", validateFields, updateAllBook)
 
-// stop in 24 endpoint
+// delete
+booksRouter.delete("/all", deleteAll)
+booksRouter.delete("/:id", deleteOne)
 
 module.exports = booksRouter

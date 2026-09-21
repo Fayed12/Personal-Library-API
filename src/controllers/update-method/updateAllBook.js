@@ -1,5 +1,4 @@
 // local
-const checkAllowedFields = require("../../services/checkAllowedFields")
 const booksData = require("../../services/readAllBooks")
 
 // node

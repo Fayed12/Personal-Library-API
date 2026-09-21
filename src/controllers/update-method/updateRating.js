@@ -9,7 +9,7 @@ const updateRating = (req, res) => {
     const id = req.params.id
     const reqBody = req.body
 
-    if (!reqBody.rating) {
+    if (!reqBody.rating == undefined) {
         return res.status(404).json({
             status: "failed",
             message: "please insert the new rating value!"
@@ -17,9 +17,16 @@ const updateRating = (req, res) => {
     }
 
     if (!checkAllowedFields(reqBody, ["rating"])) {
-        return res.status(404).json({
+        return res.status(400).json({
             status: "failed",
             message: "only rating is allowed to update"
+        })
+    }
+
+    if (reqBody.rating > 5 || typeof reqBody.rating !== "number") {
+        return res.status(400).json({
+            status: "failed",
+            message: "please insert correct value"
         })
     }
 

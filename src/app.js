@@ -43,6 +43,7 @@ app.get(["/favicon.ico", "/favicon.svg"], (req, res) => {
 app.get("/api/health", (req, res) => {
     res.status(200).json({
         status: "ok",
+        developer: "mohamed fayed",
         uptime: process.uptime(),
         timestamp: new Date().toISOString(),
         service: "Personal Library API",

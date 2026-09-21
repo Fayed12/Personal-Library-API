@@ -42,7 +42,7 @@ const createNewBook = (req, res) => {
         });
     }
 
-    if (!["planned", "completed", "reading"].includes(reqBody?.status)) {
+    if (((reqBody.status !== undefined) && (!["planned", "completed", "reading"].includes(reqBody?.status)))) {
         return res.status(400).json({
             status: "failed",
             message: `the status values are allowed are [planned, reading, completed] !`
@@ -78,7 +78,7 @@ const createNewBook = (req, res) => {
                 status: "success",
                 location: `get /api/books/${newBook.id}`,
                 message: {
-                    data: booksData
+                    data: newBook
                 }
             })
         }
