@@ -55,7 +55,7 @@ const bookSchema = new mongoose.Schema(
             }
         },
         rating: {
-            type: Number,
+            type: mongoose.Schema.Types.Decimal128,
             required: [true, "rating is required"],
             min: [0, "minium value is 0"],
             max: [5, "maximum value is 5"],

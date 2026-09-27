@@ -1,7 +1,7 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-const getBookByCategory = (req, res) => {
+const getBookByCategory = async (req, res) => {
     const category = req.params.category
 
     if (!category) {
@@ -11,7 +11,7 @@ const getBookByCategory = (req, res) => {
         })
     }
 
-    const books = booksData.filter(book => book.category.trim().toLowerCase() === category.trim().toLowerCase())
+    const books = await Book.find({ category })
 
     if (books.length <= 0) {
         return res.status(404).json({

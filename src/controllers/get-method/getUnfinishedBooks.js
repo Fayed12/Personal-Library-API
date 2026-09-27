@@ -1,9 +1,12 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-const getUnfinishedBooks = (req, res) => {
+const getUnfinishedBooks = async (req, res) => {
 
-    const books = booksData.filter(book => book.pagesRead < book.pages)
+    const books = await Book.find({
+        pagesRead: { $gt: 0 },
+        $expr: { $lt: ["$pagesRead", "$pages"] }
+    })
 
     if (books.length <= 0) {
         return res.status(200).json({

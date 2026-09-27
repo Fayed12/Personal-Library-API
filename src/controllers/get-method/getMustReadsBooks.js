@@ -1,10 +1,13 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-const getMustReadsBooks = (req, res) => {
+const getMustReadsBooks =async (req, res) => {
     const rate = 4.5
 
-    const books = booksData.filter(book => book.rating >= rate && book.status === "completed")
+    const books = await Book.find({
+        $expr: { $gte: ["$rating", rate] },
+        status: "completed"
+    })
 
     if (books.length <= 0) {
         return res.status(200).json({

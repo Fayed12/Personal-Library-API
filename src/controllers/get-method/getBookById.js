@@ -1,10 +1,10 @@
 // local
-const booksData = require("../../services/readAllBooks");
+const Book = require("../../schemas/models/bookModel");
 
-const getBookById = (req, res) => {
-    const id = req.params.id
+const getBookById = async (req, res) => {
+    const id = (req.params.id).trim()
 
-    const book = booksData.find((book => book.id === id.trim()))
+    const book = await Book.findById(id)
 
     res.status(200).json({
         status: "success",

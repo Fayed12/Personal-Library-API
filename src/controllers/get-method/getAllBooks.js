@@ -1,49 +1,41 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-const getAllBooks = (req, res) => {
-    const reqQuery = req.query
+const getAllBooks = async (req, res) => {
+    const { category, status, author, notStatus } = req.query
 
-    let results = booksData
-
-    if (reqQuery?.category) {
-
-        const books = results.filter(book => book.category.trim().toLowerCase() === reqQuery.category.trim().toLowerCase())
-
-        results = books
+    let filter = {}
+    if (category) filter.category = {
+        $regex: category.trim(),
+        $options: "i"
     }
-
-    if (reqQuery?.status) {
-        const books = results.filter(book => book.status.trim() === reqQuery.status.trim())
-
-        results = books
+    if (status) filter.status = {
+        $regex: status.trim(),
+        $options: "i"
     }
-
-    if (reqQuery?.author) {
-        const books = results.filter(book => book.author.trim().toLowerCase() === reqQuery.author.trim().toLowerCase())
-
-        results = books
+    if (author) filter.author = {
+        $regex: author.trim(),
+        $options: "i"
     }
-
-    if (reqQuery?.notStatus) {
-        const books = results.filter(book => book.status.trim() !== reqQuery.notStatus.trim())
-
-        results = books
+    if (notStatus) filter.status = {
+        $not: {
+            $regex: `^${notStatus.trim()}$`,
+            $options: "i"
+        }
     }
+    
+    const books = await Book.find(filter)
 
-    if (results.length <= 0) {
+    if (books.length <= 0) {
         return res.status(404).json({
             status: "failed",
-            message: "no data founded, try another category!"
+            message: "no data founded!"
         })
     }
 
-    // projection is incomplete
-    // sort, limit, and skip is incomplete
-
     res.status(200).json({
         status: "success",
-        data: results
+        data: books
     })
 }
 

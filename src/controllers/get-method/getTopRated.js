@@ -1,33 +1,38 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-const getTopRatedBooks = (req, res) => {
+const getTopRatedBooks = async (req, res) => {
     const reqQuery = req.query
     let defaultLimit = 5
     let MaxLimit = 10
 
-    let results = booksData
+    const reqPagesNumber = Number(reqQuery.limit)
 
-    // get best books by sort it and get the first some books with limit
+    if (typeof reqPagesNumber !== "number") {
+        return res.status(400).json({
+            status: "failed",
+            data: "the limit must be number"
+        })
+    }
 
-    if (reqQuery.limit) {
-        if (reqQuery.limit <= 0) {
+    if (reqPagesNumber) {
+        if (reqPagesNumber <= 0) {
             return res.status(400).json({
                 status: "failed",
                 data: "number must be greater than 0"
             })
         }
 
-        if (reqQuery.limit > 10) {
+        if (reqPagesNumber > 10) {
             defaultLimit = MaxLimit
         }
 
-        defaultLimit = reqQuery.limit
-
-        results = results.slice(0, defaultLimit)
+        defaultLimit = reqPagesNumber
     }
 
-    if (results.length <= 0) {
+    const books = await Book.find({ rating: { $gt: 0 } }).sort({ rating: -1 }).limit(defaultLimit)
+
+    if (books.length <= 0) {
         return res.status(404).json({
             status: "failed",
             data: "no data found"
@@ -36,8 +41,8 @@ const getTopRatedBooks = (req, res) => {
 
     res.status(200).json({
         status: "success",
-        count: results.length,
-        data: results
+        count: books.length,
+        data: books
     })
 }
 

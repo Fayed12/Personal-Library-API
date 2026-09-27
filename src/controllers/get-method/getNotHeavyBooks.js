@@ -1,23 +1,35 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel");
 
-const getNotHeavyBooks = (req, res) => {
+const getNotHeavyBooks =async (req, res) => {
     const reqQuery = req.query
+    const defaultMaxPages = 400
 
-    let results = booksData
+    let limit = defaultMaxPages;
+    const reqPagesNumber = Number(reqQuery.maxPages)
 
-    if (reqQuery.maxPages) {
-        if (reqQuery.maxPages <= 0) {
+    if (typeof reqPagesNumber !== "number") {
+        return res.status(400).json({
+            status: "failed",
+            data: "the limit must be number"
+        })
+    }
+
+    if (reqPagesNumber) {
+
+        if (reqPagesNumber <= 0) {
             return res.status(400).json({
                 status: "failed",
                 data: "number must be greater than 0"
             })
         }
 
-        results = results.filter(book => book.pages <= reqQuery.maxPages)
+        limit = reqPagesNumber
     }
 
-    if (results.length <= 0) {
+    const books =await Book.find({ pages: { $lte: limit } })
+
+    if (books.length <= 0) {
         return res.status(404).json({
             status: "failed",
             data: "no data found"
@@ -26,8 +38,8 @@ const getNotHeavyBooks = (req, res) => {
 
     res.status(200).json({
         status: "success",
-        count:results.length,
-        data: results
+        count: books.length,
+        data: books
     })
 }
 

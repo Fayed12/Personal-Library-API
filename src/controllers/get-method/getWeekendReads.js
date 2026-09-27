@@ -1,10 +1,15 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-const getWeekendReads = (req, res) => {
+const getWeekendReads = async (req, res) => {
     const maxPagesNumber = 350
 
-    const books = booksData.filter(book => book.pages <= maxPagesNumber && book.status !== "completed")
+    const books = await Book.find({
+        $nor: [
+            { pages: { $gt: maxPagesNumber } },
+            { status: "completed" }
+        ]
+    })
 
     if (books.length <= 0) {
         return res.status(200).json({

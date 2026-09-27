@@ -1,4 +1,6 @@
 // local
+const Book = require("../schemas/models/bookModel")
+
 const getAllBooks = require("../controllers/get-method/getAllBooks")
 const getBookByCategory = require("../controllers/get-method/getBookByCategory")
 const getBookById = require("../controllers/get-method/getBookById")
@@ -25,15 +27,12 @@ const deleteAll = require("../controllers/delete-method/deleteAll")
 
 // express
 const express = require("express")
-const fs = require("node:fs")
-
-const booksData = JSON.parse(fs.readFileSync(`${__dirname}/../../booksData.json`, "utf-8"))
 
 const booksRouter = express.Router()
 
 booksRouter.use(express.json({ strict: true }))
 
-booksRouter.param("id", (req, res, next, id) => {
+booksRouter.param("id", async (req, res, next, id) => {
     if (!id) {
         return res.status(404).json({
             status: "failed",
@@ -41,7 +40,7 @@ booksRouter.param("id", (req, res, next, id) => {
         })
     }
 
-    const book = booksData.find((book => book.id === id.trim()))
+    const book = Book.findById(id)
 
     if (!book) {
         return res.status(404).json({
