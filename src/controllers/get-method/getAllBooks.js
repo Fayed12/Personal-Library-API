@@ -271,19 +271,29 @@ const getAllBooks = async (req, res) => {
         projection = projection ? `${projection} createdAt` : "createdAt"
     }
 
-    const books = await Book.find(filter).select(projection).sort(sortObject).skip(skipPagination).limit(paginationLimit)
+    try {
+        const books = await Book.find(filter).select(projection).sort(sortObject).skip(skipPagination).limit(paginationLimit)
 
-    if (books.length <= 0) {
-        return res.status(404).json({
-            status: "failed",
-            message: "no data founded, or your pagination is not exist in database!"
-        })
+        if (books.length === 0) {
+            return res.status(404).json({
+                status: "failed",
+                message: "No data found!"
+            });
+        }
+
+        res.status(200).json({
+            status: "success",
+            count: books.length,
+            data: books
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            status: "error",
+            message: "Something went wrong while fetching books"
+        });
     }
-
-    res.status(200).json({
-        status: "success",
-        data: books
-    })
 }
 
 module.exports = getAllBooks

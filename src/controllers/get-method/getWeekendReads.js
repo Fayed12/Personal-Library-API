@@ -4,25 +4,34 @@ const Book = require("../../schemas/models/bookModel")
 const getWeekendReads = async (req, res) => {
     const maxPagesNumber = 350
 
-    const books = await Book.find({
-        $nor: [
-            { pages: { $gt: maxPagesNumber } },
-            { status: "completed" }
-        ]
-    })
-
-    if (books.length <= 0) {
-        return res.status(200).json({
-            status: "failed",
-            message: "no data founded, or all books you read is bigger than 350 pages"
+    try {
+        const books = await Book.find({
+            $nor: [
+                { pages: { $gt: maxPagesNumber } },
+                { status: "completed" }
+            ]
         })
-    }
 
-    res.status(200).json({
-        status: "success",
-        count: books.length,
-        data: books
-    })
+        if (books.length === 0) {
+            return res.status(404).json({
+                status: "failed",
+                message: "No data found!"
+            });
+        }
+
+        res.status(200).json({
+            status: "success",
+            count: books.length,
+            data: books
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            status: "error",
+            message: "Something went wrong while fetching books"
+        });
+    }
 }
 
 module.exports = getWeekendReads
