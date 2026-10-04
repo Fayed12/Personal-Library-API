@@ -21,6 +21,7 @@ const updateBook = require("../controllers/update-method/updateBook")
 const updateAllBook = require("../controllers/update-method/updateAllBook")
 const updateProgress = require("../controllers/update-method/updateProgress")
 const updateCategory = require("../controllers/update-method/updateCategory")
+const updateTags = require("../controllers/update-method/updateTags")
 
 const deleteOne = require("../controllers/delete-method/deleteOne")
 const deleteAll = require("../controllers/delete-method/deleteAll")
@@ -40,9 +41,9 @@ booksRouter.param("id", async (req, res, next, id) => {
         })
     }
 
-    const book = Book.findById(id)
+    const book = await Book.findById(id)
 
-    if (!book) {
+    if (!book || Object.keys(book).length == 0) {
         return res.status(404).json({
             status: "failed",
             message: "this book is not exist!"
@@ -64,7 +65,7 @@ const validateFields = (req, res, next) => {
     }
 
     const isIdExist = Object.keys(reqBody).some((field) => field == "id")
-    const isDateExist = Object.keys(reqBody).some((field) => field == "addedAt")
+    const isDateExist = Object.keys(reqBody).some((field) => field == "createdAt" || field == "updatedAt" )
 
     if (isIdExist) {
         return res.status(400).json({
@@ -84,7 +85,7 @@ const validateFields = (req, res, next) => {
         (reqBody.pages !== undefined && typeof reqBody.pages !== "number") ||
         (reqBody.pagesRead !== undefined && typeof reqBody.pagesRead !== "number") ||
         (reqBody.currentPage !== undefined && typeof reqBody.currentPage !== "number") ||
-        (reqBody.rating !== undefined && typeof reqBody.rating !== "number")
+        (reqBody.rating !== undefined && typeof Number(reqBody.rating) !== "number")
     ) {
         return res.status(400).json({
             status: "failed",
@@ -121,6 +122,7 @@ booksRouter.get("/inconsistent", getInconsistentBooks)
 booksRouter.get("/:id", getBookById)
 
 // update
+booksRouter.patch("/:id/tags", updateTags)
 booksRouter.patch("/bulk/category", updateCategory)
 booksRouter.patch("/:id/rating", updateRating)
 booksRouter.patch("/:id/progress", updateProgress)

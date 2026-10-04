@@ -1,10 +1,7 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-// node
-const fs = require("node:fs")
-
-const updateCategory = (req, res) => {
+const updateCategory = async (req, res) => {
     const { from, to } = req.body
 
     if (!from && !to) {
@@ -14,37 +11,28 @@ const updateCategory = (req, res) => {
         })
     }
 
-    const books = booksData.filter(book => {
-        return book.category.trim().toLowerCase() === from.trim().toLowerCase()
-    })
-
-    if (books.length <= 0) {
-        return res.status(404).json({
-            status: "failed",
-            message: "no data founded"
-        })
-    }
-
-    books.forEach(book => {
-        Object.assign(book, { category: to })
-    });
-
-    
-    fs.writeFile(`${__dirname}/../../../booksData.json`, JSON.stringify(booksData), (err) => {
-        if (err) {
-            res.status(404).json({
+    try {
+        const result = await Book.updateMany({ category: { $regex: from.trim().toLowerCase(), $options: "i" } }, { $set: { category: to } }, { runValidators: true })
+        
+        if (result.matchedCount === 0) {
+            return res.status(404).json({
                 status: "failed",
-                message: "something went wrong!"
-            })
-        } else {
-            res.status(200).json({
-                status: "success",
-                message: {
-                    data: books
-                }
-            })
+                message: "No books found"
+            });
         }
-    })
+
+        res.status(200).json({
+            status: "success",
+            message: "data updated successfully"
+        })
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
 }
 
 module.exports = updateCategory

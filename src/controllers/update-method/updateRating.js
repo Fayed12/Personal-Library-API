@@ -1,15 +1,12 @@
 // local
+const Book = require("../../schemas/models/bookModel")
 const checkAllowedFields = require("../../services/checkAllowedFields")
-const booksData = require("../../services/readAllBooks")
 
-// node
-const fs = require("node:fs")
-
-const updateRating = (req, res) => {
+const updateRating = async (req, res) => {
     const id = req.params.id
     const reqBody = req.body
 
-    if (!reqBody.rating == undefined) {
+    if (reqBody.rating == undefined) {
         return res.status(404).json({
             status: "failed",
             message: "please insert the new rating value!"
@@ -23,41 +20,45 @@ const updateRating = (req, res) => {
         })
     }
 
-    if (reqBody.rating > 5 || typeof reqBody.rating !== "number") {
+    if (reqBody.rating > 5 || reqBody.rating < 0) {
         return res.status(400).json({
             status: "failed",
-            message: "please insert correct value"
+            message: "rating must be between 0 and 5"
         })
     }
 
-    const book = booksData.find((book => book.id === id.trim()))
-    const isSameRating = book.rating === reqBody.rating
+    try {
+        const book = await Book.findById(id)
+        const isSameRating = Number(book.rating) === Number(reqBody.rating)
 
-    if (isSameRating) {
-        return res.status(404).json({
-            status: "failed",
-            message: "this value is already exist"
-        })
-    }
-
-    Object.assign(book, reqBody)
-
-    fs.writeFile(`${__dirname}/../../../booksData.json`, JSON.stringify(booksData), (err) => {
-        if (err) {
-            res.status(404).json({
+        if (isSameRating) {
+            return res.status(404).json({
                 status: "failed",
-                message: "something went wrong!"
-            })
-        } else {
-            res.status(200).json({
-                status: "success",
-                location: `get /api/books/${book.id}`,
-                message: {
-                    data: book
-                }
+                message: "this value is already exist"
             })
         }
-    })
+
+        const newBook = await Book.findByIdAndUpdate(id, reqBody,
+            {
+                returnDocument: "after",
+                runValidators: true
+            })
+
+        res.status(200).json({
+            status: "success",
+            location: `get /api/books/${newBook._id}`,
+            message: {
+                data: newBook
+            }
+        })
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
 }
 
 module.exports = updateRating

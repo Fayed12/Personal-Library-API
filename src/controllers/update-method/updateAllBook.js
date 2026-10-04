@@ -1,14 +1,22 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
+const checkAllowedFields = require("../../services/checkAllowedFields")
 
-// node
-const fs = require("node:fs")
+const bookSchema = {
+    title: "string",
+    author: "string",
+    category: "string",
+    pages: "number",
+    pagesRead: "number",
+    currentPage: "number",
+    rating: "number",
+    status: "reading-completed-planned",
+    publishedYear: "number",
+}
 
-const updateAllBook = (req, res) => {
+const updateAllBook = async (req, res) => {
     const id = req.params.id
     const reqBody = req.body
-
-    const book = booksData.find((book => book.id === id.trim()))
 
     if (
         reqBody.title === undefined ||
@@ -19,34 +27,44 @@ const updateAllBook = (req, res) => {
         reqBody.currentPage === undefined ||
         reqBody.rating === undefined ||
         reqBody.status === undefined ||
-        reqBody.publishedYear === undefined ||
-        reqBody.tags === undefined
+        reqBody.publishedYear === undefined
     ) {
         return res.status(400).json({
             status: "failed",
             message: "you must put all book object",
-            currentBook: book
+            currentBook: bookSchema
         });
     }
 
-    Object.assign(book, reqBody)
+    if (!checkAllowedFields(reqBody, ["rating", "title", "author", "category", "pages", "pagesRead", "currentPage", "publishedYear", "status"])) {
+        return res.status(400).json({
+            status: "failed",
+            message: "there is some values is not allowed to update"
+        })
+    }
 
-    fs.writeFile(`${__dirname}/../../../booksData.json`, JSON.stringify(booksData), (err) => {
-        if (err) {
-            res.status(404).json({
-                status: "failed",
-                message: "something went wrong!"
-            })
-        } else {
-            res.status(200).json({
-                status: "success",
-                location: `get /api/books/${book.id}`,
-                message: {
-                    data: book
-                }
-            })
-        }
-    })
+    try {
+        const book = await Book.findById(id)
+
+        Object.assign(book, reqBody)
+
+        await book.save()
+
+        res.status(200).json({
+            status: "success",
+            location: `get /api/books/${book.id}`,
+            message: {
+                data: book
+            }
+        })
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
 }
 
 module.exports = updateAllBook
