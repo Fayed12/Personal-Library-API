@@ -6,8 +6,8 @@ const updateRating = async (req, res) => {
     const id = req.params.id
     const reqBody = req.body
 
-    if (reqBody.rating == undefined) {
-        return res.status(404).json({
+    if (reqBody.rating === undefined) {
+        return res.status(400).json({
             status: "failed",
             message: "please insert the new rating value!"
         })
@@ -20,7 +20,7 @@ const updateRating = async (req, res) => {
         })
     }
 
-    if (reqBody.rating > 5 || reqBody.rating < 0) {
+    if (Number(reqBody.rating) > 5 || Number(reqBody.rating) < 0) {
         return res.status(400).json({
             status: "failed",
             message: "rating must be between 0 and 5"

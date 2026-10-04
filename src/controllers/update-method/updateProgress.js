@@ -1,17 +1,13 @@
 // local
 const Book = require("../../schemas/models/bookModel")
 const checkAllowedFields = require("../../services/checkAllowedFields")
-const booksData = require("../../services/readAllBooks")
-
-// node
-const fs = require("node:fs")
 
 const updateProgress = async (req, res) => {
     const id = req.params.id
     const reqBody = req.body
 
-    if (!reqBody.pagesRead == undefined) {
-        return res.status(404).json({
+    if (!reqBody.pagesRead === undefined) {
+        return res.status(400).json({
             status: "failed",
             message: "please insert the new pages Read value!"
         })

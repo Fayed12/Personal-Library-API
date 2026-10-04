@@ -10,8 +10,8 @@ const updateBook = async (req, res) => {
     const id = req.params.id
     const reqBody = req.body
 
-    if (reqBody == undefined) {
-        return res.status(404).json({
+    if (reqBody === undefined) {
+        return res.status(400).json({
             status: "failed",
             message: "please insert new value to start update!"
         })
