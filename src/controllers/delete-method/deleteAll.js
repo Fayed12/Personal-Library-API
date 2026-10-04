@@ -1,31 +1,35 @@
-// node
-const fs = require("node:fs")
+// local
+const Book = require("../../schemas/models/bookModel")
 
-const deleteAll = (req, res) => {
-    const { confirm } = Boolean(req.query)
+const deleteAll = async (req, res) => {
+    const confirm = req.query.confirm === "true"
 
     if (!confirm) {
-        return res.status(404).json({
+        return res.status(400).json({
             status: "failed",
             message: "actions denied because you not confirm the delete all action"
         })
     }
 
-    fs.writeFile(`${__dirname}/../../../booksData.json`, JSON.stringify([]), (err) => {
-        if (err) {
-            res.status(404).json({
+    try {
+        const result = await Book.deleteMany({})
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({
                 status: "failed",
-                message: "something went wrong!"
-            })
-        } else {
-            res.status(204).json({
-                status: "success",
-                message: {
-                    data: []
-                }
+                message: "process is failed, nothing deleted, it might be there is not data found"
             })
         }
-    })
+
+        res.status(204).send()
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
 }
 
 

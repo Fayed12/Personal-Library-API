@@ -14,7 +14,6 @@ const updateTags = async (req, res) => {
 
     try {
         const tags = reqBody?.tags?.split(",").map(tag => tag.trim()).filter(Boolean);
-        console.log(tags)
 
         const book = await Book.findByIdAndUpdate(id, {
             $addToSet:

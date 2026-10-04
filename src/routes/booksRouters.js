@@ -28,6 +28,7 @@ const deleteAll = require("../controllers/delete-method/deleteAll")
 
 // express
 const express = require("express")
+const deleteBulk = require("../controllers/delete-method/deleteBulk")
 
 const booksRouter = express.Router()
 
@@ -131,6 +132,7 @@ booksRouter.put("/:id", validateFields, updateAllBook)
 
 // delete
 booksRouter.delete("/all", deleteAll)
+booksRouter.delete("/bulk", deleteBulk)
 booksRouter.delete("/:id", deleteOne)
 
 module.exports = booksRouter

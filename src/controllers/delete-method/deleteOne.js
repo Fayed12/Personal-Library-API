@@ -1,30 +1,35 @@
 // local
-const booksData = require("../../services/readAllBooks")
+const Book = require("../../schemas/models/bookModel")
 
-// node
-const fs = require("node:fs")
-
-const deleteOne = (req, res) => {
+const deleteOne = async (req, res) => {
     const { id } = req.params
-    const selectedBookIndex = booksData.findIndex(book => book.id === id)
 
-    booksData.splice(selectedBookIndex, 1)
+    try {
 
-    fs.writeFile(`${__dirname}/../../../booksData.json`, JSON.stringify(booksData), (err) => {
-        if (err) {
-            res.status(404).json({
-                status: "failed",
-                message: "something went wrong!"
-            })
-        } else {
-            res.status(204).json({
-                status: "success",
-                message: {
-                    data: booksData
-                }
-            })
-        }
-    })
+        const book = await Book.findByIdAndDelete(id, {
+            projection: {
+                title: 1,
+                author: 1,
+                pages: 1,
+                status: 1,
+            }
+        })
+
+        res.status(200).json({
+            status: "success",
+            message: {
+                data: book
+            }
+        })
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
 }
 
 module.exports = deleteOne

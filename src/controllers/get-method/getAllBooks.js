@@ -284,6 +284,7 @@ const getAllBooks = async (req, res) => {
         res.status(200).json({
             status: "success",
             count: books.length,
+            limit: paginationLimit,
             data: books
         });
     } catch (error) {
