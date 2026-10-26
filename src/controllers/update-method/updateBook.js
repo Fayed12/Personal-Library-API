@@ -1,7 +1,6 @@
 // local
 const Book = require("../../schemas/models/bookModel")
 const checkAllowedFields = require("../../services/checkAllowedFields")
-const booksData = require("../../services/readAllBooks")
 
 // node
 const fs = require("node:fs")

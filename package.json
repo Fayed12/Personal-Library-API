@@ -1,6 +1,6 @@
 {
   "name": "personal-library-api",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Personal Library API manages a single collection called books inside a database called personal_library",
   "homepage": "https://github.com/Fayed12/Personal-Library-API#readme",
   "bugs": {

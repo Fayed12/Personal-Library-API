@@ -4,12 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport"
             content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-        <title>Personal Library API &bull; Modern RESTful Book Management &amp;
-            Analytics</title>
+        <title>Personal Library API &bull; Modern RESTful Book Management &amp; Analytics</title>
         <meta name="description"
-            content="High-performance Personal Library API built with Node.js, Express 5, and the official MongoDB driver. Features intra-document progress comparison ($expr), multi-stage aggregation, and clean RESTful design.">
+            content="High-performance Personal Library API built with Node.js, Express 5, and Mongoose 9. Features intra-document progress comparison ($expr), multi-stage MongoDB aggregation pipelines, and resilient Atlas connectivity.">
         <meta name="keywords"
-            content="Personal Library API, MongoDB native driver, Express 5, Node.js, RESTful API, books database, reading analytics, developer documentation">
+            content="Personal Library API, Express 5, Mongoose 9, Node.js, MongoDB Atlas, RESTful API, books database, reading analytics, developer documentation">
         <meta name="author" content="Mohamed Fayed">
         <meta name="robots" content="index, follow">
         <meta name="theme-color" content="#2D1A12">
@@ -24,7 +23,7 @@
         <meta property="og:title"
             content="Personal Library API &bull; Modern RESTful Architecture">
         <meta property="og:description"
-            content="Explore the official MongoDB Node.js driver Personal Library API with deep querying, reading progress analytics, and aggregation pipelines.">
+            content="Explore the Mongoose 9 & Express 5 Personal Library API with deep querying, reading progress synchronization, and aggregation pipelines.">
         <meta property="og:site_name" content="Personal Library API">
 
         <!-- Twitter Meta -->
@@ -32,7 +31,7 @@
         <meta name="twitter:title"
             content="Personal Library API &bull; Modern RESTful Service">
         <meta name="twitter:description"
-            content="Built with pure MongoDB Node.js driver & Express 5. Zero Mongoose bloat, direct cursor streaming, and multi-stage aggregation analytics.">
+            content="Built with Express 5, Mongoose 9 & MongoDB Atlas. Custom DNS resilience, atomic progress updates, and multi-stage aggregation analytics.">
 
         <!-- Fonts & CSS -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +47,7 @@
           "@context": "https://schema.org",
           "@type": "WebApplication",
           "name": "Personal Library API",
-          "description": "High-performance Node.js & MongoDB REST API for books management and reading analytics",
+          "description": "High-performance Node.js, Express 5 & Mongoose 9 REST API for books management and reading analytics",
           "applicationCategory": "DeveloperApplication",
           "operatingSystem": "All",
           "author": {
@@ -169,7 +168,7 @@
                                 <polygon
                                     points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                             </svg>
-                            <span>Production-Ready Node.js Architecture</span>
+                            <span>Production-Ready Node.js &amp; Mongoose 9 Architecture</span>
                         </div>
 
                         <h1 class="hero-title" id="hero-heading">
@@ -178,12 +177,9 @@
                         </h1>
 
                         <p class="hero-description">
-                            A high-performance RESTful API engineered with the
-                            official MongoDB Node.js driver.
-                            Manage your personal books collection with deep
-                            querying, intra-document reading progress
-                            comparisons,
-                            and multi-stage aggregation analytics.
+                            A high-performance RESTful API engineered with Express 5, Mongoose 9, and MongoDB Atlas.
+                            Manage your personal library with deep multi-field querying, intra-document reading progress
+                            comparisons via <code>$expr</code>, and multi-stage aggregation analytics.
                         </p>
 
                         <div class="hero-actions">
@@ -214,7 +210,7 @@
 
                         <div class="hero-meta-row">
                             <div class="meta-item">
-                                <span class="meta-val">30+</span>
+                                <span class="meta-val">28+</span>
                                 <span class="meta-label">Total Endpoints</span>
                             </div>
                             <div class="meta-item">
@@ -222,13 +218,12 @@
                                 <span class="meta-label">Execution Stages</span>
                             </div>
                             <div class="meta-item">
-                                <span class="meta-val">0ms</span>
-                                <span class="meta-label">ORM Overhead</span>
+                                <span class="meta-val">Atlas</span>
+                                <span class="meta-label">DNS Resilient</span>
                             </div>
                             <div class="meta-item">
-                                <span class="meta-val">v1.0</span>
-                                <span class="meta-label">Express 5 &bull;
-                                    Mongo</span>
+                                <span class="meta-val">v2.0</span>
+                                <span class="meta-label">Express 5 &bull; Mongoose 9</span>
                             </div>
                         </div>
                     </div>
@@ -259,13 +254,13 @@
 
                             <pre
                                 class="showcase-body"><code><span class="syn-punct">{</span>
-  <span class="syn-key">"_id"</span><span class="syn-punct">:</span> <span class="syn-str">"ObjectId('6745f348e1a5f6a9821c4001')"</span><span class="syn-punct">,</span>
+  <span class="syn-key">"_id"</span><span class="syn-punct">:</span> <span class="syn-str">"66f1a1000000000000000001"</span><span class="syn-punct">,</span>
   <span class="syn-key">"title"</span><span class="syn-punct">:</span> <span class="syn-str">"Clean Code"</span><span class="syn-punct">,</span>
   <span class="syn-key">"author"</span><span class="syn-punct">:</span> <span class="syn-str">"Robert C. Martin"</span><span class="syn-punct">,</span>
   <span class="syn-key">"category"</span><span class="syn-punct">:</span> <span class="syn-str">"software-engineering"</span><span class="syn-punct">,</span>
   <span class="syn-key">"pages"</span><span class="syn-punct">:</span> <span class="syn-num">464</span><span class="syn-punct">,</span>
   <span class="syn-key">"pagesRead"</span><span class="syn-punct">:</span> <span class="syn-num">464</span><span class="syn-punct">,</span>
-  <span class="syn-key">"CurrentPage"</span><span class="syn-punct">:</span> <span class="syn-num">464</span><span class="syn-punct">,</span>
+  <span class="syn-key">"currentPage"</span><span class="syn-punct">:</span> <span class="syn-num">464</span><span class="syn-punct">,</span>
   <span class="syn-key">"rating"</span><span class="syn-punct">:</span> <span class="syn-num">4.5</span><span class="syn-punct">,</span>
   <span class="syn-key">"status"</span><span class="syn-punct">:</span> <span class="syn-str">"completed"</span><span class="syn-punct">,</span>
   <span class="syn-key">"publishedYear"</span><span class="syn-punct">:</span> <span class="syn-num">2008</span><span class="syn-punct">,</span>
@@ -317,8 +312,8 @@
                                 </svg>
                             </div>
                             <div class="chip-text">
-                                <h5>Direct Mongo Cursors</h5>
-                                <p>Zero ORM Bloat &bull; Pure Async Node.js</p>
+                                <h5>Mongoose 9 Validation</h5>
+                                <p>Strict Schema &bull; Atlas DNS Resilience</p>
                             </div>
                         </div>
                     </div>
@@ -334,13 +329,10 @@
                             Pillars</span>
                         <h2 class="section-title"
                             id="features-heading">Engineered for Precision &amp;
-                            Learning</h2>
+                            Performance</h2>
                         <p class="section-desc">
-                            Built according to strict production criteria with
-                            the
-                            official MongoDB driver, highlighting pure query
-                            optimization, aggregation mechanics, and clean code
-                            principles.
+                            Built according to strict production backend standards with Express 5, Mongoose 9,
+                            and MongoDB Atlas, emphasizing query optimization, atomic lifecycle updates, and clean modular code.
                         </p>
                     </div>
 
@@ -359,13 +351,10 @@
                                         d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
                                 </svg>
                             </div>
-                            <h3>Native Driver Power</h3>
+                            <h3>Express 5 &amp; Mongoose 9</h3>
                             <p>
-                                Uses the official MongoDB Node.js driver rather
-                                than Mongoose. Experience direct driver commands
-                                like <code>insertOne()</code>,
-                                <code>find().toArray()</code>, and raw
-                                <code>$set</code> pipelines.
+                                Leverages modern Node.js async/await error propagation, Mongoose model validations,
+                                custom DNS resolvers (Google 8.8.8.8 &amp; Cloudflare 1.1.1.1), and zero connection drops on Atlas.
                             </p>
                         </div>
 
@@ -381,13 +370,10 @@
                                     <line x1="6" y1="20" x2="6" y2="14"></line>
                                 </svg>
                             </div>
-                            <h3>Intra-Document Progress</h3>
+                            <h3>Smart Progress Lifecycle</h3>
                             <p>
-                                Features <code>pagesRead</code> comparison via
-                                MongoDB <code>$expr</code>. Power dynamic
-                                filters like <code>/api/books/unfinished</code>
-                                to evaluate field-against-field values on the
-                                fly.
+                                Features dynamic intra-document <code>$expr</code> evaluation (e.g. <code>pagesRead &lt; pages</code>).
+                                Updating progress automatically calculates and synchronizes reading status and bookmarks.
                             </p>
                         </div>
 
@@ -407,10 +393,8 @@
                             </div>
                             <h3>Multi-Stage Aggregation</h3>
                             <p>
-                                Extract deep library metrics across categories,
-                                reading statuses, average ratings, and pace
-                                using <code>$match</code>, <code>$group</code>,
-                                and controller-level data reshaping.
+                                Unlocks rich statistical insights using MongoDB <code>$match</code>, <code>$group</code>,
+                                and <code>$project</code>: track total library pages, category distributions, rating averages, and author output.
                             </p>
                         </div>
 
@@ -424,12 +408,10 @@
                                         d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                 </svg>
                             </div>
-                            <h3>Data Integrity &amp; Quality</h3>
+                            <h3>Data Integrity &amp; Security</h3>
                             <p>
-                                Equipped with intentional consistency checks
-                                (such as <code>/api/books/inconsistent</code>)
-                                and enum guards for clean categorization and
-                                dependable persistence.
+                                Fortified with Helmet Content Security Policies, CORS protection, parameter pre-validation,
+                                and strict schema guards that prevent mutation of immutable IDs or creation dates.
                             </p>
                         </div>
                     </div>
@@ -445,9 +427,8 @@
                         <h2 class="section-title" id="schema-heading">The Book
                             Collection Model</h2>
                         <p class="section-desc">
-                            A single collection named <code>books</code> inside
-                            the <code>personal_library</code> database,
-                            engineered with clear field validation constraints.
+                            Managed within the <code>books</code> collection inside the <code>personal_library</code> database,
+                            strictly validated by Mongoose schema constraints with <code>{ strict: "throw" }</code>.
                         </p>
                     </div>
 
@@ -483,8 +464,7 @@
                                                     class="field-type">String</span></td>
                                             <td><span
                                                     class="badge-req">Required</span></td>
-                                            <td>Trimmed, 1 &ndash; 150
-                                                characters</td>
+                                            <td>Unique, trimmed, min 5 chars</td>
                                         </tr>
                                         <tr>
                                             <td><span
@@ -493,8 +473,7 @@
                                                     class="field-type">String</span></td>
                                             <td><span
                                                     class="badge-req">Required</span></td>
-                                            <td>Trimmed, 1 &ndash; 100
-                                                characters</td>
+                                            <td>Trimmed, min 5 chars</td>
                                         </tr>
                                         <tr>
                                             <td><span
@@ -503,8 +482,8 @@
                                                     class="field-type">String</span></td>
                                             <td><span
                                                     class="badge-req">Required</span></td>
-                                            <td><code>programming</code>,
-                                                <code>software-engineering</code>,
+                                            <td><code>software-engineering</code>,
+                                                <code>programming</code>,
                                                 <code>business</code>,
                                                 <code>history</code>,
                                                 <code>science</code></td>
@@ -513,43 +492,37 @@
                                             <td><span
                                                     class="field-name">pages</span></td>
                                             <td><span
-                                                    class="field-type">Integer</span></td>
+                                                    class="field-type">Number</span></td>
                                             <td><span
                                                     class="badge-req">Required</span></td>
-                                            <td>Range 1 &ndash; 5,000</td>
+                                            <td>Minimum value: 0 (default: 0)</td>
                                         </tr>
                                         <tr>
                                             <td><span
                                                     class="field-name">pagesRead</span></td>
                                             <td><span
-                                                    class="field-type">Integer</span></td>
+                                                    class="field-type">Number</span></td>
                                             <td><span
-                                                    class="badge-opt">Optional</span></td>
-                                            <td>Default <code>0</code>, range
-                                                between 0 and
-                                                <code>pages</code></td>
+                                                    class="badge-req">Required</span></td>
+                                            <td>Min: 0, custom validator: <code>pagesRead &le; pages</code></td>
                                         </tr>
                                         <tr>
                                             <td><span
-                                                    class="field-name">CurrentPage</span></td>
+                                                    class="field-name">currentPage</span></td>
                                             <td><span
-                                                    class="field-type">Integer</span></td>
+                                                    class="field-type">Number</span></td>
                                             <td><span
-                                                    class="badge-opt">Optional</span></td>
-                                            <td>Default <code>0</code>, range
-                                                between 0 and
-                                                <code>pages</code></td>
+                                                    class="badge-req">Required</span></td>
+                                            <td>Min: 0, bookmark marker: <code>currentPage &le; pages</code></td>
                                         </tr>
                                         <tr>
                                             <td><span
                                                     class="field-name">rating</span></td>
                                             <td><span
-                                                    class="field-type">Number</span></td>
+                                                    class="field-type">Decimal128</span></td>
                                             <td><span
-                                                    class="badge-opt">Optional</span></td>
-                                            <td>Default <code>0</code>
-                                                (unrated), 0&ndash;5 in steps of
-                                                0.5</td>
+                                                    class="badge-req">Required</span></td>
+                                            <td>Range 0.0 &ndash; 5.0 (0 denotes unrated)</td>
                                         </tr>
                                         <tr>
                                             <td><span
@@ -557,20 +530,17 @@
                                             <td><span
                                                     class="field-type">String</span></td>
                                             <td><span
-                                                    class="badge-opt">Optional</span></td>
-                                            <td><code>reading</code>,
-                                                <code>completed</code>, or
-                                                <code>planned</code>
-                                                (default)</td>
+                                                    class="badge-req">Required</span></td>
+                                            <td>Enum: <code>planned</code>, <code>reading</code>, <code>completed</code></td>
                                         </tr>
                                         <tr>
                                             <td><span
                                                     class="field-name">publishedYear</span></td>
                                             <td><span
-                                                    class="field-type">Integer</span></td>
+                                                    class="field-type">Number</span></td>
                                             <td><span
                                                     class="badge-req">Required</span></td>
-                                            <td>1000 up to current year</td>
+                                            <td>Year 1000 up to current year</td>
                                         </tr>
                                         <tr>
                                             <td><span
@@ -578,19 +548,17 @@
                                             <td><span
                                                     class="field-type">Array</span></td>
                                             <td><span
-                                                    class="badge-opt">Optional</span></td>
-                                            <td>Array of strings, max 5 items,
-                                                lowercase</td>
+                                                    class="badge-req">Required</span></td>
+                                            <td>Array of string tags (default: <code>[]</code>)</td>
                                         </tr>
                                         <tr>
                                             <td><span
-                                                    class="field-name">addedAt</span></td>
+                                                    class="field-name">createdAt / updatedAt</span></td>
                                             <td><span
                                                     class="field-type">Date</span></td>
                                             <td><span
                                                     class="badge-opt">System</span></td>
-                                            <td>Auto-assigned <code>new
-                                                    Date()</code> by server</td>
+                                            <td>Automatic Mongoose timestamps</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -608,10 +576,10 @@
   "author": "Martin Kleppmann",
   "category": "software-engineering",
   "pages": 616,
-  "pagesRead": 240,
-  "currentPage": 240,
-  "rating": 5,
-  "status": "reading",
+  "pagesRead": 616,
+  "currentPage": 616,
+  "rating": 5.0,
+  "status": "completed",
   "publishedYear": 2017,
   "tags": ["distributed-systems", "databases", "architecture"]
 }' aria-label="Copy sample JSON book document">
@@ -632,10 +600,10 @@
   <span class="syn-key">"author"</span>: <span class="syn-str">"Martin Kleppmann"</span>,
   <span class="syn-key">"category"</span>: <span class="syn-str">"software-engineering"</span>,
   <span class="syn-key">"pages"</span>: <span class="syn-num">616</span>,
-  <span class="syn-key">"pagesRead"</span>: <span class="syn-num">240</span>,
-  <span class="syn-key">"currentPage</span>: <span class="syn-num">240</span>,
+  <span class="syn-key">"pagesRead"</span>: <span class="syn-num">616</span>,
+  <span class="syn-key">"currentPage"</span>: <span class="syn-num">616</span>,
   <span class="syn-key">"rating"</span>: <span class="syn-num">5.0</span>,
-  <span class="syn-key">"status"</span>: <span class="syn-str">"reading"</span>,
+  <span class="syn-key">"status"</span>: <span class="syn-str">"completed"</span>,
   <span class="syn-key">"publishedYear"</span>: <span class="syn-num">2017</span>,
   <span class="syn-key">"tags"</span>: [
     <span class="syn-str">"distributed-systems"</span>,
@@ -657,8 +625,8 @@
                         <h2 class="section-title" id="endpoints-heading">Route
                             &amp; Endpoint Directory</h2>
                         <p class="section-desc">
-                            Click any endpoint to preview its execution in the
-                            simulator below, or copy its exact route pattern.
+                            Click any endpoint to preview its live or simulated output in the
+                            interactive tester below, or copy its exact route.
                         </p>
                     </div>
 
@@ -675,7 +643,7 @@
                                 role="tab" aria-selected="true"
                                 aria-pressed="true">
                                 <span>All Routes</span>
-                                <span class="pill-counter">19</span>
+                                <span class="pill-counter">27</span>
                             </button>
                             <button class="tab-pill" data-filter="stage-1"
                                 role="tab" aria-selected="false"
@@ -686,32 +654,32 @@
                             <button class="tab-pill" data-filter="stage-2"
                                 role="tab" aria-selected="false"
                                 aria-pressed="false">
-                                <span>Stage 2: Queries &amp; Pagination</span>
-                                <span class="pill-counter">4</span>
+                                <span>Stage 2: Queries &amp; Filters</span>
+                                <span class="pill-counter">5</span>
                             </button>
                             <button class="tab-pill" data-filter="stage-3"
                                 role="tab" aria-selected="false"
                                 aria-pressed="false">
-                                <span>Stage 3: Advanced &amp; $expr</span>
-                                <span class="pill-counter">3</span>
+                                <span>Stage 3: Curated &amp; $expr</span>
+                                <span class="pill-counter">6</span>
                             </button>
                             <button class="tab-pill" data-filter="stage-4"
                                 role="tab" aria-selected="false"
                                 aria-pressed="false">
                                 <span>Stage 4: Updates</span>
-                                <span class="pill-counter">3</span>
+                                <span class="pill-counter">4</span>
                             </button>
                             <button class="tab-pill" data-filter="stage-5"
                                 role="tab" aria-selected="false"
                                 aria-pressed="false">
-                                <span>Stage 5: Bulk &amp; Deletions</span>
-                                <span class="pill-counter">2</span>
+                                <span>Stage 5: Deletions</span>
+                                <span class="pill-counter">3</span>
                             </button>
                             <button class="tab-pill" data-filter="stage-6"
                                 role="tab" aria-selected="false"
                                 aria-pressed="false">
                                 <span>Stage 6: Aggregations</span>
-                                <span class="pill-counter">2</span>
+                                <span class="pill-counter">4</span>
                             </button>
                         </div>
 
@@ -731,12 +699,9 @@
                                 <span class="stage-badge">Stage 1</span>
                             </div>
                             <div class="api-route">/api/health</div>
-                            <div class="api-desc">System health check
-                                verification. Confirms MongoDB connection and
-                                Express readiness.</div>
+                            <div class="api-desc">System health check verification. Confirms MongoDB connection and Express 5 readiness.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">No Auth &bull; 200
-                                    OK</span>
+                                <span class="api-pill-info">No Auth &bull; 200 OK</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/health" title="Copy Route"
                                     aria-label="Copy route /api/health">Copy</button>
@@ -750,11 +715,9 @@
                                 <span class="stage-badge">Stage 1</span>
                             </div>
                             <div class="api-route">/api/books</div>
-                            <div class="api-desc">Create a single book in the
-                                library with validated fields and auto-generated
-                                timestamp.</div>
+                            <div class="api-desc">Create a single book in the library with validated schema fields and auto-timestamps.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">201 Created</span>
+                                <span class="api-pill-info">201 Created &bull; Book.create()</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books" title="Copy Route"
                                     aria-label="Copy route /api/books">Copy</button>
@@ -768,12 +731,9 @@
                                 <span class="stage-badge">Stage 1</span>
                             </div>
                             <div class="api-route">/api/books/bulk</div>
-                            <div class="api-desc">Seed or bulk-create multiple
-                                book documents in a single atomic database
-                                trip.</div>
+                            <div class="api-desc">Seed or bulk-create multiple book documents in a single atomic batch trip via booksData.json.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">201 Created &bull;
-                                    insertMany()</span>
+                                <span class="api-pill-info">201 Created &bull; insertMany()</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/bulk"
                                     title="Copy Route"
@@ -788,11 +748,9 @@
                                 <span class="stage-badge">Stage 1</span>
                             </div>
                             <div class="api-route">/api/books</div>
-                            <div class="api-desc">Retrieve all books in the
-                                personal library as an array cursor.</div>
+                            <div class="api-desc">Retrieve all books in the personal library with total count and data array.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">200 OK &bull;
-                                    find().toArray()</span>
+                                <span class="api-pill-info">200 OK &bull; find()</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books" title="Copy Route"
                                     aria-label="Copy route /api/books">Copy</button>
@@ -806,12 +764,9 @@
                                 <span class="stage-badge">Stage 1</span>
                             </div>
                             <div class="api-route">/api/books/:id</div>
-                            <div class="api-desc">Fetch a single book by
-                                converting string ID to native MongoDB
-                                ObjectId.</div>
+                            <div class="api-desc">Fetch a single book by ID with parametric validation middleware verification.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">200 OK / 404 Not
-                                    Found</span>
+                                <span class="api-pill-info">200 OK / 404 Not Found</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/:id"
                                     title="Copy Route"
@@ -827,12 +782,9 @@
                                 <span class="stage-badge">Stage 2</span>
                             </div>
                             <div class="api-route">/api/books/top-rated</div>
-                            <div class="api-desc">Filter books with highest
-                                reviews, sorted by rating descending (5.0
-                                &darr;).</div>
+                            <div class="api-desc">Filter books with highest reviews, sorted by rating descending (5.0 &darr;).</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Curated &bull;
-                                    rating &gt; 0</span>
+                                <span class="api-pill-info">Curated &bull; Top 5</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/top-rated"
                                     title="Copy Route"
@@ -847,11 +799,9 @@
                                 <span class="stage-badge">Stage 2</span>
                             </div>
                             <div class="api-route">/api/books/recent</div>
-                            <div class="api-desc">Recently added books sorted by
-                                <code>addedAt</code> descending.</div>
+                            <div class="api-desc">Recently published books sorted by <code>publishedYear</code> descending.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Curated &bull; Sort
-                                    -1</span>
+                                <span class="api-pill-info">Curated &bull; Sort -1</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/recent"
                                     title="Copy Route"
@@ -865,16 +815,30 @@
                                 <span class="method-tag method-get">GET</span>
                                 <span class="stage-badge">Stage 2</span>
                             </div>
+                            <div class="api-route">/api/books/category/:category</div>
+                            <div class="api-desc">Parametric category filter matching specific genre paths (e.g. software-engineering).</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Route Param Filter</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/category/software-engineering"
+                                    title="Copy Route"
+                                    aria-label="Copy route category">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-2" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 2</span>
+                            </div>
                             <div
                                 class="api-route">/api/books?category=&amp;status=&amp;author=</div>
-                            <div class="api-desc">Exact match and
-                                <code>$ne</code> filters supporting multiple
-                                search criteria.</div>
+                            <div class="api-desc">Multi-field query parser with case-insensitive regex search and exclusion operators.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Query params
-                                    filtering</span>
+                                <span class="api-pill-info">Dynamic Query Engine</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/books?category=&status=&author="
+                                    data-copy="/api/books?category=programming&status=reading"
                                     title="Copy Route"
                                     aria-label="Copy filter route">Copy</button>
                             </div>
@@ -887,15 +851,12 @@
                                 <span class="stage-badge">Stage 2</span>
                             </div>
                             <div
-                                class="api-route">/api/books?page=1&amp;limit=10&amp;sort=-publishedYear</div>
-                            <div class="api-desc">Cursor-based pagination with
-                                <code>skip()</code>, <code>limit()</code>, and
-                                multi-field sorting.</div>
+                                class="api-route">/api/books?page=1&amp;limit=5&amp;sort=-rating</div>
+                            <div class="api-desc">Pagination with <code>skip()</code>, <code>limit()</code>, field projection, and multi-sort.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Pagination &bull;
-                                    Projection</span>
+                                <span class="api-pill-info">Pagination &bull; Projection</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/books?page=1&limit=10"
+                                    data-copy="/api/books?page=1&limit=5&sort=-rating"
                                     title="Copy Route"
                                     aria-label="Copy pagination route">Copy</button>
                             </div>
@@ -908,13 +869,27 @@
                                 <span class="method-tag method-get">GET</span>
                                 <span class="stage-badge">Stage 3</span>
                             </div>
-                            <div class="api-route">/api/books/unfinished</div>
-                            <div class="api-desc">Intra-document comparison via
-                                <code>$expr: { $lt: ["$pagesRead", "$pages"]
-                                    }</code>.</div>
+                            <div class="api-route">/api/books/must-reads</div>
+                            <div class="api-desc">High priority completed books combining <code>$expr: { $gte: ["$rating", 4.5] }</code>.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Advanced &bull;
-                                    $expr</span>
+                                <span class="api-pill-info">Curated &bull; Rating &ge; 4.5</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/must-reads"
+                                    title="Copy Route"
+                                    aria-label="Copy route must-reads">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-3" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 3</span>
+                            </div>
+                            <div class="api-route">/api/books/unfinished</div>
+                            <div class="api-desc">Intra-document progress comparison finding active reads where <code>pagesRead &lt; pages</code>.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Intra-doc &bull; $expr</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/unfinished"
                                     title="Copy Route"
@@ -928,17 +903,14 @@
                                 <span class="method-tag method-get">GET</span>
                                 <span class="stage-badge">Stage 3</span>
                             </div>
-                            <div class="api-route">/api/books/inconsistent</div>
-                            <div class="api-desc">Data-quality probe finding
-                                status conflicts (e.g., marked completed but
-                                pagesRead &lt; pages).</div>
+                            <div class="api-route">/api/books/not-heavy</div>
+                            <div class="api-desc">Concise reading options filtering volumes with 300 pages or fewer.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Integrity &bull;
-                                    $expr + $or</span>
+                                <span class="api-pill-info">Filter &bull; pages &le; 300</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/books/inconsistent"
+                                    data-copy="/api/books/not-heavy"
                                     title="Copy Route"
-                                    aria-label="Copy route /api/books/inconsistent">Copy</button>
+                                    aria-label="Copy route not-heavy">Copy</button>
                             </div>
                         </div>
 
@@ -948,17 +920,48 @@
                                 <span class="method-tag method-get">GET</span>
                                 <span class="stage-badge">Stage 3</span>
                             </div>
-                            <div class="api-route">/api/books/must-reads</div>
-                            <div class="api-desc">High priority catalog query
-                                combining <code>$and</code> logic across ratings
-                                and tags.</div>
+                            <div class="api-route">/api/books/weekend-reads</div>
+                            <div class="api-desc">Quick, high-impact titles perfectly sized for weekend reading sessions.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Logical &bull;
-                                    $and</span>
+                                <span class="api-pill-info">Filter &bull; Quick Reads</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/books/must-reads"
+                                    data-copy="/api/books/weekend-reads"
                                     title="Copy Route"
-                                    aria-label="Copy route /api/books/must-reads">Copy</button>
+                                    aria-label="Copy route weekend-reads">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-3" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 3</span>
+                            </div>
+                            <div class="api-route">/api/books/next-up</div>
+                            <div class="api-desc">Reading queue manager finding planned titles waiting in the queue.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Queue &bull; status: planned</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/next-up"
+                                    title="Copy Route"
+                                    aria-label="Copy route next-up">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-3" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 3</span>
+                            </div>
+                            <div class="api-route">/api/books/inconsistent</div>
+                            <div class="api-desc">Data integrity auditor detecting status anomalies (e.g. completed but pagesRead &lt; pages).</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Audit &bull; $expr + $or</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/inconsistent"
+                                    title="Copy Route"
+                                    aria-label="Copy route /api/books/inconsistent">Copy</button>
                             </div>
                         </div>
 
@@ -970,13 +973,28 @@
                                     class="method-tag method-patch">PATCH</span>
                                 <span class="stage-badge">Stage 4</span>
                             </div>
-                            <div class="api-route">/api/books/:id/rating</div>
-                            <div class="api-desc">Single field atomic update
-                                modifying only the user rating with range
-                                validation.</div>
+                            <div class="api-route">/api/books/:id/progress</div>
+                            <div class="api-desc">Intelligent progress updater: automatically recalibrates status and currentPage from pagesRead.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">updateOne() &bull;
-                                    $set</span>
+                                <span class="api-pill-info">Atomic &bull; Auto-Status</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/:id/progress"
+                                    title="Copy Route"
+                                    aria-label="Copy route progress">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-4" tabindex="0">
+                            <div class="api-card-top">
+                                <span
+                                    class="method-tag method-patch">PATCH</span>
+                                <span class="stage-badge">Stage 4</span>
+                            </div>
+                            <div class="api-route">/api/books/:id/rating</div>
+                            <div class="api-desc">Atomic rating updater validating decimal rating range between 0.0 and 5.0.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Rating &bull; Range 0-5</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/:id/rating"
                                     title="Copy Route"
@@ -991,35 +1009,32 @@
                                     class="method-tag method-patch">PATCH</span>
                                 <span class="stage-badge">Stage 4</span>
                             </div>
-                            <div class="api-route">/api/books/:id/progress</div>
-                            <div class="api-desc">Update pages read with
-                                automatic status synchronization (marking
-                                completed when done).</div>
+                            <div class="api-route">/api/books/:id/tags</div>
+                            <div class="api-desc">Appends new tags using MongoDB <code>$addToSet</code> to eliminate duplicate entries.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Atomic &bull;
-                                    Validation</span>
+                                <span class="api-pill-info">$addToSet &bull; Set Array</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/books/:id/progress"
+                                    data-copy="/api/books/:id/tags?tags=cloud,architecture"
                                     title="Copy Route"
-                                    aria-label="Copy route progress">Copy</button>
+                                    aria-label="Copy route tags">Copy</button>
                             </div>
                         </div>
 
                         <div class="api-card reveal-on-scroll"
                             data-stage="stage-4" tabindex="0">
                             <div class="api-card-top">
-                                <span class="method-tag method-put">PUT</span>
+                                <span
+                                    class="method-tag method-patch">PATCH</span>
                                 <span class="stage-badge">Stage 4</span>
                             </div>
-                            <div class="api-route">/api/books/:id</div>
-                            <div class="api-desc">Complete document replacement
-                                enforcing strict schema validation.</div>
+                            <div class="api-route">/api/books/bulk/category</div>
+                            <div class="api-desc">Batch category rename across multiple documents using <code>updateMany()</code>.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">replaceOne()</span>
+                                <span class="api-pill-info">updateMany() &bull; Rebrand</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/books/:id"
+                                    data-copy="/api/books/bulk/category"
                                     title="Copy Route"
-                                    aria-label="Copy route replace">Copy</button>
+                                    aria-label="Copy route bulk category">Copy</button>
                             </div>
                         </div>
 
@@ -1032,10 +1047,9 @@
                                 <span class="stage-badge">Stage 5</span>
                             </div>
                             <div class="api-route">/api/books/:id</div>
-                            <div class="api-desc">Delete a single book document
-                                by its unique MongoDB ObjectId.</div>
+                            <div class="api-desc">Delete a single book document by ID with projection response.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">deleteOne()</span>
+                                <span class="api-pill-info">findByIdAndDelete()</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/:id"
                                     title="Copy Route"
@@ -1051,14 +1065,31 @@
                                 <span class="stage-badge">Stage 5</span>
                             </div>
                             <div class="api-route">/api/books/bulk</div>
-                            <div class="api-desc">Batch delete books matching
-                                specific query criteria or tags.</div>
+                            <div class="api-desc">Delete multiple books matching filtered IDs, status, category, or maxRating.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">deleteMany()</span>
+                                <span class="api-pill-info">deleteMany() &bull; Filtered</span>
                                 <button class="btn-mini-copy"
                                     data-copy="/api/books/bulk"
                                     title="Copy Route"
                                     aria-label="Copy route delete bulk">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-5" tabindex="0">
+                            <div class="api-card-top">
+                                <span
+                                    class="method-tag method-delete">DELETE</span>
+                                <span class="stage-badge">Stage 5</span>
+                            </div>
+                            <div class="api-route">/api/books/all</div>
+                            <div class="api-desc">Purge all documents from the books collection for a clean slate.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">deleteMany({}) &bull; Flush</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/all"
+                                    title="Copy Route"
+                                    aria-label="Copy route delete all">Copy</button>
                             </div>
                         </div>
 
@@ -1069,15 +1100,29 @@
                                 <span class="method-tag method-get">GET</span>
                                 <span class="stage-badge">Stage 6</span>
                             </div>
-                            <div class="api-route">/api/stats/by-category</div>
-                            <div class="api-desc">MongoDB <code>$group</code>
-                                aggregation returning books count and average
-                                rating per category.</div>
+                            <div class="api-route">/api/books/stats</div>
+                            <div class="api-desc">Global aggregation pipeline returning totalBooks, totalPages, and averagePages.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Aggregation &bull;
-                                    $group</span>
+                                <span class="api-pill-info">Aggregate &bull; Overview</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/stats/by-category"
+                                    data-copy="/api/books/stats"
+                                    title="Copy Route"
+                                    aria-label="Copy route stats">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-6" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 6</span>
+                            </div>
+                            <div class="api-route">/api/books/stats/by-category</div>
+                            <div class="api-desc">Groups library records by category with cumulative pages and nested book sets.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Aggregate &bull; $group</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/stats/by-category"
                                     title="Copy Route"
                                     aria-label="Copy route stats by category">Copy</button>
                             </div>
@@ -1089,17 +1134,31 @@
                                 <span class="method-tag method-get">GET</span>
                                 <span class="stage-badge">Stage 6</span>
                             </div>
-                            <div class="api-route">/api/stats/reading-pace</div>
-                            <div class="api-desc">Calculates total pages read vs
-                                planned and computes overall completion
-                                ratios.</div>
+                            <div class="api-route">/api/books/stats/by-status</div>
+                            <div class="api-desc">Analyzes reading pace: compares total pages against totalPagesRead across statuses.</div>
                             <div class="api-card-footer">
-                                <span class="api-pill-info">Aggregation &bull;
-                                    Metrics</span>
+                                <span class="api-pill-info">Aggregate &bull; Status Pace</span>
                                 <button class="btn-mini-copy"
-                                    data-copy="/api/stats/reading-pace"
+                                    data-copy="/api/books/stats/by-status"
                                     title="Copy Route"
-                                    aria-label="Copy route reading pace">Copy</button>
+                                    aria-label="Copy route stats by status">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="api-card reveal-on-scroll"
+                            data-stage="stage-6" tabindex="0">
+                            <div class="api-card-top">
+                                <span class="method-tag method-get">GET</span>
+                                <span class="stage-badge">Stage 6</span>
+                            </div>
+                            <div class="api-route">/api/books/stats/by-author?minBooks=1</div>
+                            <div class="api-desc">Aggregates author catalog density and cumulative pages filtered by minBooks.</div>
+                            <div class="api-card-footer">
+                                <span class="api-pill-info">Aggregate &bull; Authors</span>
+                                <button class="btn-mini-copy"
+                                    data-copy="/api/books/stats/by-author?minBooks=1"
+                                    title="Copy Route"
+                                    aria-label="Copy route stats by author">Copy</button>
                             </div>
                         </div>
 
@@ -1112,12 +1171,10 @@
                             <div>
                                 <h3 id="sim-heading">API Interactive Tester</h3>
                                 <p class="sim-desc">
-                                    Test live or simulated responses for any
-                                    registered endpoint.
+                                    Test live or simulated responses for any registered endpoint. Fully functional even when offline or disconnected!
                                 </p>
                             </div>
-                            <span class="window-badge">Client Simulation
-                                Engine</span>
+                            <span class="window-badge">Client Simulation Engine</span>
                         </div>
 
                         <div class="sim-controls">
@@ -1144,9 +1201,10 @@
                         <pre id="sim-output" class="sim-output"
                             aria-live="polite"
                             aria-label="API response preview">{
-  <span class="syn-comment">// Click "Send Request" or select any endpoint above to execute</span>
+  <span class="syn-comment">// Click "Send Request" or select any endpoint card above to test</span>
   <span class="syn-key">"status"</span>: <span class="syn-str">"ready"</span>,
-  <span class="syn-key">"tip"</span>: <span class="syn-str">"Try /api/health or /api/books/unfinished"</span>
+  <span class="syn-key">"tip"</span>: <span class="syn-str">"Try /api/books/stats, /api/books?category=programming, or /api/health"</span>,
+  <span class="syn-key">"offlineMode"</span>: <span class="syn-str">"Active: Authentic responses available even without a running server"</span>
 }</pre>
                     </div>
 
@@ -1162,9 +1220,7 @@
                         <h2 class="section-title" id="quickstart-heading">Get
                             Started in 4 Easy Steps</h2>
                         <p class="section-desc">
-                            Spin up the server, connect your local MongoDB
-                            instance,
-                            and seed test books in under two minutes.
+                            Spin up the server, connect MongoDB Atlas, and seed your library with booksData.json in minutes.
                         </p>
                     </div>
 
@@ -1173,8 +1229,7 @@
                             tabindex="0">
                             <div class="step-number" aria-hidden="true">1</div>
                             <h3>Install Dependencies</h3>
-                            <p>Installs Express 5, MongoDB native driver,
-                                Helmet, and development utilities.</p>
+                            <p>Installs Express 5, Mongoose 9, Helmet, CORS, and development utilities.</p>
                             <div class="cmd-box">
                                 <code>npm install</code>
                                 <button data-copy="npm install"
@@ -1186,9 +1241,7 @@
                             tabindex="0">
                             <div class="step-number" aria-hidden="true">2</div>
                             <h3>Configure Environment</h3>
-                            <p>Copy <code>.example.env</code> to
-                                <code>.env</code> and specify your MongoDB
-                                connection URI and PORT.</p>
+                            <p>Copy <code>.example.env</code> to <code>.env</code> and insert your MongoDB Atlas URI &amp; PASSWORD.</p>
                             <div class="cmd-box">
                                 <code>cp .example.env .env</code>
                                 <button data-copy="cp .example.env .env"
@@ -1200,8 +1253,7 @@
                             tabindex="0">
                             <div class="step-number" aria-hidden="true">3</div>
                             <h3>Launch with Nodemon</h3>
-                            <p>Start the development server with live reload and
-                                automatic environment injection.</p>
+                            <p>Start the development server with live reload and automatic environment injection.</p>
                             <div class="cmd-box">
                                 <code>npm start</code>
                                 <button data-copy="npm start"
@@ -1212,15 +1264,13 @@
                         <div class="step-card reveal-on-scroll" data-delay="400"
                             tabindex="0">
                             <div class="step-number" aria-hidden="true">4</div>
-                            <h3>Verify System Health</h3>
-                            <p>Hit the health endpoint to confirm server and
-                                MongoDB connection status.</p>
+                            <h3>Seed with booksData.json</h3>
+                            <p>Initialize your collection with 20 curated books via the bulk creation endpoint.</p>
                             <div class="cmd-box">
-                                <code>curl
-                                    http://localhost:4000/api/health</code>
+                                <code>curl -X POST http://localhost:4000/api/books/bulk</code>
                                 <button
-                                    data-copy="curl http://localhost:4000/api/health"
-                                    aria-label="Copy curl health check command">Copy</button>
+                                    data-copy="curl -X POST http://localhost:4000/api/books/bulk"
+                                    aria-label="Copy curl seed command">Copy</button>
                             </div>
                         </div>
                     </div>
@@ -1236,11 +1286,8 @@
                     <div class="footer-brand">
                         <h2>Personal Library API</h2>
                         <p>
-                            An educational and production-grade RESTful API
-                            built
-                            with the official MongoDB Node.js driver.
-                            Engineered with clean architectural patterns, robust
-                            error handling, and rich aggregation analytics.
+                            A production-grade RESTful API built with Express 5, Mongoose 9, and MongoDB Atlas.
+                            Engineered with clean architectural patterns, robust schema validations, and rich aggregation analytics.
                         </p>
                     </div>
 
@@ -1248,12 +1295,9 @@
                         <h3>Key Resources</h3>
                         <ul class="footer-links">
                             <li><a href="#overview">Project Overview</a></li>
-                            <li><a href="#schema">Book Schema &amp;
-                                    Validation</a></li>
-                            <li><a href="#endpoints">API Endpoint
-                                    Catalog</a></li>
-                            <li><a href="#simulator">Interactive
-                                    Simulator</a></li>
+                            <li><a href="#schema">Book Schema &amp; Validation</a></li>
+                            <li><a href="#endpoints">API Endpoint Catalog</a></li>
+                            <li><a href="#simulator">Interactive Simulator</a></li>
                         </ul>
                     </div>
 
@@ -1269,19 +1313,15 @@
                             <li><a
                                     href="https://mohamed-fayed-porfile.vercel.app/"
                                     target="_blank" rel="noopener"
-                                    aria-label="Personal Library API GitHub Repository">Author:
-                                    Mohamed
-                                    Fayed</a></li>
-                            <li><span class="footer-meta-text">License:
-                                    MIT</span></li>
+                                    aria-label="Author Portfolio">Author: Mohamed Fayed</a></li>
+                            <li><span class="footer-meta-text">License: MIT</span></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="footer-bottom">
                     <div>&copy; 2026 Personal Library API. Mohamed Fayed.</div>
-                    <div class="footer-tech-stack">Node.js &bull; Express 5
-                        &bull; MongoDB</div>
+                    <div class="footer-tech-stack">Node.js &bull; Express 5 &bull; Mongoose 9 &bull; MongoDB Atlas</div>
                 </div>
             </div>
         </footer>
