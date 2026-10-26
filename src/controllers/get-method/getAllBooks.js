@@ -268,7 +268,6 @@ const getAllBooks = async (req, res) => {
         if (!sort) {
             sortObject = { createdAt: -1 }
         }
-        projection = projection ? `${projection} createdAt` : "createdAt"
     }
 
     try {
