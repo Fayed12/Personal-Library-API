@@ -51,4 +51,11 @@ app.get("/api/health", (req, res) => {
     })
 })
 
+app.use((req, res, next) => {
+    res.status(404).json({
+        status: "failed",
+        message: `this request: ${req.method} ${req.originalUrl} is not found`
+    })
+})
+
 module.exports = app
