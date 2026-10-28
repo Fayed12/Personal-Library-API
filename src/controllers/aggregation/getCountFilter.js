@@ -1,7 +1,7 @@
 // local
 const Book = require("../../schemas/models/bookModel")
 
-const getCountFilter = async (req, res) => {
+const getCountFilter = async (req, res,next) => {
     const reqQuery = req.query
 
     const filter = {}
@@ -23,24 +23,12 @@ const getCountFilter = async (req, res) => {
             }
         ])
 
-        if (count.length === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "No data found!"
-            });
-        }
-
         res.status(200).json({
             status: "success",
             data: count
         });
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: "Something went wrong while fetching books"
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

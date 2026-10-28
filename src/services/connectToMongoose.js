@@ -17,8 +17,8 @@ async function connectToMongoose() {
         console.log("successfully connected to MongoDB....")
         return
 
-    } catch (error) {
-        console.log(error)
+    } catch (err) {
+        throw err
     }
 }
 

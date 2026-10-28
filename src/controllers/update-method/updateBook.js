@@ -1,33 +1,25 @@
 // local
 const Book = require("../../schemas/models/bookModel")
 const checkAllowedFields = require("../../services/checkAllowedFields")
+const createErrorObject = require("../../services/errorObject")
 
-// node
-const fs = require("node:fs")
-
-const updateBook = async (req, res) => {
+const updateBook = async (req, res, next) => {
     const id = req.params.id
     const reqBody = req.body
 
-    if (reqBody === undefined) {
-        return res.status(400).json({
-            status: "failed",
-            message: "please insert new value to start update!"
-        })
+    if ((!reqBody || Object.keys(reqBody).length === 0)) {
+        const err = createErrorObject("please start insert new value to start update!", "failed", 400, true)
+        throw err
     }
 
     if (!checkAllowedFields(reqBody, ["rating", "title", "author", "category", "pages", "pagesRead", "currentPage", "publishedYear", "status"])) {
-        return res.status(400).json({
-            status: "failed",
-            message: "there is some values is not allowed to update"
-        })
+        const err = createErrorObject("there is some values is not allowed to update", "failed", 400, true)
+        throw err
     }
 
     if (reqBody?.rating > 5 || reqBody?.rating < 0) {
-        return res.status(400).json({
-            status: "failed",
-            message: "rating must be between 0 and 5"
-        })
+        const err = createErrorObject("rating must be between 0 and 5", "failed", 400, true)
+        throw err
     }
 
     try {
@@ -44,66 +36,48 @@ const updateBook = async (req, res) => {
         const isSameStatus = book.status === reqBody?.status
 
         if (isSameRating) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this rating is already exist"
-            })
+            const err = createErrorObject("this rating is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSameTitle) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this title is already exist"
-            })
+            const err = createErrorObject("this title is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSameAuthor) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this author name is already exist"
-            })
+            const err = createErrorObject("this author is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSameCategory) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this category is already exist"
-            })
+            const err = createErrorObject("this category is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSamePages) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this pages value is already exist"
-            })
+            const err = createErrorObject("this pages value is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSamePagesRead) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this pages read value is already exist"
-            })
+            const err = createErrorObject("this pages read value is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSameCurrentPage) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this currant page value is already exist"
-            })
+            const err = createErrorObject("this current page value is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSamePublishedYear) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this Published Year value is already exist"
-            })
+            const err = createErrorObject("this published year value is already exist", "failed", 409, true)
+            throw err
         }
 
         if (isSameStatus) {
-            return res.status(409).json({
-                status: "failed",
-                message: "this status value is already exist"
-            })
+            const err = createErrorObject("this status value is already exist", "failed", 409, true)
+            throw err
         }
 
         Object.assign(book, reqBody)
@@ -118,13 +92,8 @@ const updateBook = async (req, res) => {
             }
         })
 
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

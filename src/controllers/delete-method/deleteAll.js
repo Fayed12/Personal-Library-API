@@ -1,34 +1,26 @@
 // local
 const Book = require("../../schemas/models/bookModel")
+const createErrorObject = require("../../services/errorObject")
 
-const deleteAll = async (req, res) => {
+const deleteAll = async (req, res, next) => {
     const confirm = req.query.confirm === "true"
 
     if (!confirm) {
-        return res.status(400).json({
-            status: "failed",
-            message: "actions denied because you not confirm the delete all action"
-        })
+        const err = createErrorObject("actions denied because you not confirm the delete all action", "failed", 400, true)
+        throw err
     }
 
     try {
         const result = await Book.deleteMany({})
 
         if (result.deletedCount === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "process is failed, nothing deleted, it might be there is not data found"
-            })
+            const err = createErrorObject("process is failed, nothing deleted, it might be there is not data found", "failed", 500, true)
+            throw err
         }
 
         res.status(204).send()
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

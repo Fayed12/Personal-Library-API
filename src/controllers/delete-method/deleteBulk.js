@@ -1,14 +1,13 @@
 // local
 const Book = require("../../schemas/models/bookModel")
+const createErrorObject = require("../../services/errorObject")
 
-const deleteBulk = async (req, res) => {
+const deleteBulk = async (req, res, next) => {
     const { ids, status, category, maxRating } = req.query
 
     if (!ids && !status && !category && maxRating === undefined) {
-        return res.status(400).json({
-            status: "failed",
-            message: "please provide at least one filter: [ids, maxRating, category, status]"
-        });
+        const err = createErrorObject("please provide at least one filter: [ids, maxRating, category, status]", "failed", 400, true)
+        throw err
     }
 
     const filter = {};
@@ -20,10 +19,8 @@ const deleteBulk = async (req, res) => {
             .filter(Boolean);
 
         if (idsArray.length > 20) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you can add ids up to 20"
-            });
+            const err = createErrorObject("you can add ids up to 20", "failed", 400, true)
+            throw err
         }
 
         filter._id = { $in: idsArray };
@@ -47,20 +44,13 @@ const deleteBulk = async (req, res) => {
         const result = await Book.deleteMany(filter)
 
         if (result.deletedCount === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "process is failed nothing deleted, check your ids"
-            })
+            const err = createErrorObject("process is failed nothing deleted, check your ids", "failed", 500, true)
+            throw err
         }
 
         res.sendStatus(204)
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

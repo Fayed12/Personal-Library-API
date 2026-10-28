@@ -1,11 +1,12 @@
 // local
-const Book = require("../../schemas/models/bookModel")
+const Book = require("../../schemas/models/bookModel");
+const createErrorObject = require("../../services/errorObject");
 
 const escapeRegex = value => {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
-const getAllBooks = async (req, res) => {
+const getAllBooks = async (req, res, next) => {
     const { category, status, author, notStatus, fields, sort, page, limit, minRating, maxRating, pagesOver, pagesUnder, fromYear, toYear, categories, excludeStatuses, tags } = req.query
 
     const defaultLimit = 5;
@@ -32,10 +33,8 @@ const getAllBooks = async (req, res) => {
     }
     if (notStatus) {
         if (status || excludeStatuses) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you can use only status or excludeStatuses or notStatus not both"
-            })
+            const err = createErrorObject("you can use only status or excludeStatuses or notStatus not both", "failed", 400, true)
+            throw err
         }
 
         filter.status = {
@@ -47,17 +46,13 @@ const getAllBooks = async (req, res) => {
     }
     if (minRating || maxRating) {
         if ((minRating && Number.isNaN(Number(minRating))) || (maxRating && Number.isNaN(Number(maxRating)))) {
-            return res.status(400).json({
-                status: "failed",
-                message: "minRating or maxRating must be number"
-            })
+            const err = createErrorObject("minRating or maxRating must be number", "failed", 400, true)
+            throw err
         }
 
         if (Number(minRating) < 0 || Number(maxRating) < 0 || Number(minRating) > 5 || Number(maxRating) > 5) {
-            return res.status(400).json({
-                status: "failed",
-                message: "invalid rating values, must be from 0 to 5"
-            })
+            const err = createErrorObject("invalid rating values, must be from 0 to 5", "failed", 400, true)
+            throw err
         }
 
         if (
@@ -66,10 +61,8 @@ const getAllBooks = async (req, res) => {
             maxRating &&
             Number(minRating) >= Number(maxRating)
         ) {
-            return res.status(400).json({
-                status: "failed",
-                message: "minRating must be lower than maxRating"
-            })
+            const err = createErrorObject("minRating must be lower than maxRating", "failed", 400, true)
+            throw err
         }
 
         filter.rating = minRating ?
@@ -79,10 +72,8 @@ const getAllBooks = async (req, res) => {
     }
     if (pagesOver || pagesUnder) {
         if ((pagesOver && Number.isNaN(Number(pagesOver))) || (pagesUnder && Number.isNaN(Number(pagesUnder)))) {
-            return res.status(400).json({
-                status: "failed",
-                message: "pagesOver or pagesUnder must be number"
-            })
+            const err = createErrorObject("pagesOver or pagesUnder must be number", "failed", 400, true)
+            throw err
         }
 
         if (
@@ -90,10 +81,8 @@ const getAllBooks = async (req, res) => {
             pagesUnder &&
             Number(pagesOver) >= Number(pagesUnder)
         ) {
-            return res.status(400).json({
-                status: "failed",
-                message: "pagesOver must be lower than pagesUnder"
-            })
+            const err = createErrorObject("pagesOver must be lower than pagesUnder", "failed", 400, true)
+            throw err
         }
 
         filter.pages = pagesOver ?
@@ -103,24 +92,18 @@ const getAllBooks = async (req, res) => {
     }
     if (fromYear || toYear) {
         if ((fromYear && Number.isNaN(Number(fromYear))) || (toYear && Number.isNaN(Number(toYear)))) {
-            return res.status(400).json({
-                status: "failed",
-                message: "pagesOver or pagesUnder must be number"
-            })
+            const err = createErrorObject("pagesOver or pagesUnder must be number", "failed", 400, true)
+            throw err
         }
 
         if (fromYear > currentYear || toYear > currentYear) {
-            return res.status(400).json({
-                status: "failed",
-                message: `invalid year, year must be under current year: ${currentYear}`
-            })
+            const err = createErrorObject(`invalid year, year must be under current year: ${currentYear}`, "failed", 400, true)
+            throw err
         }
 
         if (fromYear > toYear) {
-            return res.status(400).json({
-                status: "failed",
-                message: "fromYear must be lower than toYear"
-            })
+            const err = createErrorObject("fromYear must be lower than toYear", "failed", 400, true)
+            throw err
         }
 
         filter.publishedYear = fromYear ?
@@ -130,10 +113,8 @@ const getAllBooks = async (req, res) => {
     }
     if (categories) {
         if (category) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you can use only category or categories not both"
-            })
+            const err = createErrorObject("you can use only category or categories not both", "failed", 400, true)
+            throw err
         }
 
         const categoriesArray = categories.split(",")
@@ -141,19 +122,15 @@ const getAllBooks = async (req, res) => {
             .filter(Boolean);
 
         if (categoriesArray.length > 5) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you can use only 5 values in one time"
-            })
+            const err = createErrorObject("you can use only 5 values in one time", "failed", 400, true)
+            throw err
         }
         filter.category = { $in: categoriesArray.map(cat => new RegExp(escapeRegex(cat), "i")) }
     }
     if (excludeStatuses) {
         if (status || notStatus) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you can use only status or excludeStatuses or notStatus not both"
-            })
+            const err = createErrorObject("you can use only status or excludeStatuses or notStatus not both", "failed", 400, true)
+            throw err
         }
         const statusArray = excludeStatuses.split(",")
             .map(status => status.trim())
@@ -167,10 +144,8 @@ const getAllBooks = async (req, res) => {
             .filter(Boolean);
 
         if (tagsArray.length > 5) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you can use only 5 values in one time"
-            })
+            const err = createErrorObject("you can use only 5 values in one time", "failed", 400, true)
+            throw err
         }
         filter.tags = { $in: tagsArray.map(tag => new RegExp(escapeRegex(tag), "i")) }
     }
@@ -198,9 +173,8 @@ const getAllBooks = async (req, res) => {
         })
 
         if (!isValid) {
-            return res.status(400).json({
-                message: "Invalid fields requested"
-            });
+            const err = createErrorObject("Invalid fields requested", "failed", 400, true)
+            throw err
         }
 
         projection = fieldsToArray.join(" ")
@@ -230,9 +204,8 @@ const getAllBooks = async (req, res) => {
         })
 
         if (!isValid) {
-            return res.status(400).json({
-                message: "Invalid fields requested"
-            });
+            const err = createErrorObject("Invalid fields requested", "failed", 400, true)
+            throw err
         }
 
         sortToArray.forEach((filed) => {
@@ -249,17 +222,13 @@ const getAllBooks = async (req, res) => {
         const pageNumber = page ? Number(page) : defaultPage
 
         if (Number.isNaN(limitNumber) || Number.isNaN(pageNumber)) {
-            return res.status(400).json({
-                status: "failed",
-                message: "page or limit must be numbers"
-            })
+            const err = createErrorObject("page or limit must be numbers", "failed", 400, true)
+            throw err
         }
 
         if (limitNumber <= 0 || pageNumber <= 0) {
-            return res.status(400).json({
-                status: "failed",
-                message: "page or limit must be greater than 0"
-            })
+            const err = createErrorObject("page or limit must be greater than 0", "failed", 400, true)
+            throw err
         }
 
         paginationLimit = limitNumber ? limitNumber > 20 ? maxLimit : limitNumber : defaultLimit
@@ -273,26 +242,14 @@ const getAllBooks = async (req, res) => {
     try {
         const books = await Book.find(filter).select(projection).sort(sortObject).skip(skipPagination).limit(paginationLimit)
 
-        if (books.length === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "No data found!"
-            });
-        }
-
         res.status(200).json({
             status: "success",
             count: books.length,
             limit: paginationLimit,
             data: books
         });
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: "Something went wrong while fetching books"
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

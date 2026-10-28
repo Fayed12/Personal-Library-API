@@ -1,15 +1,14 @@
 // local
 const Book = require("../../schemas/models/bookModel")
+const createErrorObject = require("../../services/errorObject")
 
-const createNewBook = async (req, res) => {
+const createNewBook = async (req, res, next) => {
     try {
         const reqBody = req.body
 
-        if (reqBody._id) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you not allowed to send id with your object!"
-            })
+        if (reqBody._id || reqBody.id) {
+            const err = createErrorObject("you not allowed to send id with your object!", "failed", 400, true)
+            throw err
         }
 
         const book = await Book.create(reqBody)
@@ -21,11 +20,8 @@ const createNewBook = async (req, res) => {
                 data: book
             }
         })
-    } catch (error) {
-        return res.status(400).json({
-            status: "failed",
-            message: error.message
-        })
+    } catch (err) {
+        next(err)
     }
 }
 

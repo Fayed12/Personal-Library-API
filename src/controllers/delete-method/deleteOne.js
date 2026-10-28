@@ -1,7 +1,8 @@
 // local
 const Book = require("../../schemas/models/bookModel")
+const createErrorObject = require("../../services/errorObject")
 
-const deleteOne = async (req, res) => {
+const deleteOne = async (req, res, next) => {
     const { id } = req.params
 
     try {
@@ -15,6 +16,11 @@ const deleteOne = async (req, res) => {
             }
         })
 
+        if (!book) {
+            const err = createErrorObject("book not found", "failed", 404, true)
+            throw err
+        }
+
         res.status(200).json({
             status: "success",
             message: {
@@ -22,13 +28,8 @@ const deleteOne = async (req, res) => {
             }
         })
 
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

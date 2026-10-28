@@ -1,24 +1,23 @@
 // local
 const Book = require("../../schemas/models/bookModel");
+const createErrorObject = require("../../services/errorObject");
 
-const createBulkBooks = async (req, res) => {
+const createBulkBooks = async (req, res, next) => {
     try {
         const reqBody = req.body
 
         let idExist = false
 
         reqBody.books.forEach(reqBook => {
-            if (reqBook._id) {
+            if (reqBody._id || reqBody.id) {
                 idExist = true
                 return
             }
         });
 
         if (idExist) {
-            return res.status(400).json({
-                status: "failed",
-                message: "you not allowed to send id with your object!"
-            })
+            const err = createErrorObject("you not allowed to send id with your object!", "failed", 400, true)
+            throw err
         }
 
         const books = await Book.insertMany(reqBody.books)
@@ -30,11 +29,8 @@ const createBulkBooks = async (req, res) => {
             }
         })
 
-    } catch (error) {
-        return res.status(400).json({
-            status: "failed",
-            message: error.message
-        })
+    } catch (err) {
+        next(err)
     }
 }
 

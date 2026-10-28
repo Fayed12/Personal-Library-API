@@ -1,30 +1,25 @@
 // local
 const Book = require("../../schemas/models/bookModel");
+const createErrorObject = require("../../services/errorObject");
 
-const getBookById = async (req, res) => {
+const getBookById = async (req, res, next) => {
     const id = (req.params.id).trim()
 
     try {
         const book = await Book.findById(id)
 
-        if (Object.keys(book).length === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "No data found!"
-            });
+        if (!book) {
+
+            const err = createErrorObject("no data found", "failed", 404, true)
+            throw err
         }
 
         res.status(200).json({
             status: "success",
             data: book
         });
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: "Something went wrong while fetching books"
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

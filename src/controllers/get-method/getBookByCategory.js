@@ -1,25 +1,21 @@
 // local
 const Book = require("../../schemas/models/bookModel")
+const createErrorObject = require("../../services/errorObject")
 
-const getBookByCategory = async (req, res) => {
-    const category = req.params.category
+const getBookByCategory = async (req, res, next) => {
+    const categoryParams = req.params.category
+    const category = {
+        $regex: new RegExp(`^${categoryParams}`),
+        $options: "i"
+    }
 
     if (!category) {
-        return res.status(404).json({
-            status: "failed",
-            message: "please insert category you want!"
-        })
+        const err = createErrorObject("please insert category you want!", "failed", 400, true)
+        throw err
     }
 
     try {
         const books = await Book.find({ category });
-
-        if (books.length === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "No data found!"
-            });
-        }
 
         res.status(200).json({
             status: "success",
@@ -27,12 +23,7 @@ const getBookByCategory = async (req, res) => {
             data: books
         });
     } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: "Something went wrong while fetching books"
-        });
+        next(err)
     }
 }
 

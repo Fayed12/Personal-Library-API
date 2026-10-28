@@ -2,41 +2,33 @@
 const Book = require("../../schemas/models/bookModel")
 const checkAllowedFields = require("../../services/checkAllowedFields")
 
-const updateProgress = async (req, res) => {
+const updateProgress = async (req, res, next) => {
     const id = req.params.id
     const reqBody = req.body
 
     if (!reqBody.pagesRead === undefined) {
-        return res.status(400).json({
-            status: "failed",
-            message: "please insert the new pages Read value!"
-        })
+        const err = createErrorObject("please insert the new pages Read value!", "failed", 400, true)
+        throw err
     }
 
     if (!checkAllowedFields(reqBody, ["pagesRead"])) {
-        return res.status(404).json({
-            status: "failed",
-            message: "only pagesRead is allowed to update"
-        })
+        const err = createErrorObject("only pagesRead is allowed to update", 400, true)
+        throw err
     }
 
     try {
         const book = await Book.findById(id)
 
         if (reqBody.pagesRead > book.pages || typeof reqBody.pagesRead !== "number") {
-            return res.status(400).json({
-                status: "failed",
-                message: `please insert correct value or pages lower than book pages: ${book.pages}`
-            })
+            const err = createErrorObject(`please insert correct value or pages lower than book pages: ${book.pages}`, "failed", 400, true)
+            throw err
         }
 
         const isSamePagesRead = book.pagesRead === reqBody.pagesRead
 
         if (isSamePagesRead) {
-            return res.status(404).json({
-                status: "failed",
-                message: "this value is already exist"
-            })
+            const err = createErrorObject("this value is already exist", "failed", 400, true)
+            throw err
         }
 
         let newStatusValue = {}
@@ -60,13 +52,8 @@ const updateProgress = async (req, res) => {
             }
         })
 
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

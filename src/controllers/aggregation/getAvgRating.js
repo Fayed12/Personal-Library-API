@@ -1,7 +1,7 @@
 // local
 const Book = require("../../schemas/models/bookModel")
 
-const getAvgRating = async (req, res) => {
+const getAvgRating = async (req, res, next) => {
     const reqQuery = req.query
 
     const filter = {}
@@ -43,24 +43,12 @@ const getAvgRating = async (req, res) => {
             }
         ])
 
-        if (result.length === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "No data found!"
-            });
-        }
-
         res.status(200).json({
             status: "success",
             data: result
         });
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: "Something went wrong while fetching books"
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

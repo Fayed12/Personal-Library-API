@@ -1,37 +1,29 @@
 // local
 const Book = require("../../schemas/models/bookModel")
+const createErrorObject = require("../../services/errorObject")
 
-const updateCategory = async (req, res) => {
+const updateCategory = async (req, res, next) => {
     const { from, to } = req.body
 
-    if (!from && !to) {
-        return res.status(400).json({
-            status: "failed",
-            message: " please insert from and to data object"
-        })
+    if (!from || !to) {
+        const err = createErrorObject("please insert from and to data object", "failed", 400, true)
+        throw err
     }
 
     try {
         const result = await Book.updateMany({ category: { $regex: from.trim().toLowerCase(), $options: "i" } }, { $set: { category: to } }, { runValidators: true })
-        
+
         if (result.matchedCount === 0) {
-            return res.status(404).json({
-                status: "failed",
-                message: "No books found"
-            });
+            const err = createErrorObject("No books found", "failed", 404, true)
+            throw err
         }
 
         res.status(200).json({
             status: "success",
             message: "data updated successfully"
         })
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+    } catch (err) {
+        next(err)
     }
 }
 

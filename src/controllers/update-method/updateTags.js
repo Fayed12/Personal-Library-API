@@ -1,19 +1,18 @@
 // local
 const Book = require("../../schemas/models/bookModel")
+const createErrorObject = require("../../services/errorObject")
 
-const updateTags = async (req, res) => {
-    const reqBody = req.query
+const updateTags = async (req, res, next) => {
+    const reqQuery = req.query
     const { id } = req.params
 
-    if (!reqBody) {
-        return res.status(400).json({
-            status: "failed",
-            message: "please insert your tags"
-        });
+    if (!reqQuery || Object.entries(reqQuery).length === 0) {
+        const err = createErrorObject("please insert your tags", "failed", 400, true)
+        throw err
     }
 
     try {
-        const tags = reqBody?.tags?.split(",").map(tag => tag.trim()).filter(Boolean);
+        const tags = reqQuery?.tags?.split(",").map(tag => tag.trim()).filter(Boolean);
 
         const book = await Book.findByIdAndUpdate(id, {
             $addToSet:
@@ -26,10 +25,8 @@ const updateTags = async (req, res) => {
         }, { runValidators: true, returnDocument: "after" })
 
         if (!book) {
-            return res.status(404).json({
-                status: "failed",
-                message: "No book found"
-            });
+            const err = createErrorObject("No book found", "failed", 404, true)
+            throw err
         }
 
         res.status(200).json({
@@ -37,13 +34,8 @@ const updateTags = async (req, res) => {
             location: `get /api/books/${book._id}`,
             message: book
         })
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+    } catch (err) {
+        next(err)
     }
 }
 
