@@ -63,7 +63,7 @@ booksRouter.param("id", async (req, res, next, id) => {
 const validateFields = (req, res, next) => {
     const reqBody = req.body
 
-    if (!reqBody) {
+    if (!Object.keys(reqBody).length === 0) {
         const err = createErrorObject("please start to add fields", "failed", 400, true)
         return next(err)
     }
@@ -81,20 +81,20 @@ const validateFields = (req, res, next) => {
         return next(err)
     }
 
-    if (
-        (reqBody.pages !== undefined && typeof reqBody.pages !== "number") ||
-        (reqBody.pagesRead !== undefined && typeof reqBody.pagesRead !== "number") ||
-        (reqBody.currentPage !== undefined && typeof reqBody.currentPage !== "number") ||
-        (reqBody.rating !== undefined && typeof Number(reqBody.rating) !== "number")
-    ) {
-        const err = createErrorObject("pages, pagesRead, currentPage and rating must be numbers!", "failed", 400, true)
-        return next(err)
-    }
+    // if (
+    //     (reqBody.pages !== undefined && typeof reqBody.pages !== "number") ||
+    //     (reqBody.pagesRead !== undefined && typeof reqBody.pagesRead !== "number") ||
+    //     (reqBody.currentPage !== undefined && typeof reqBody.currentPage !== "number") ||
+    //     (reqBody.rating !== undefined && Number.isNaN(Number(reqBody.rating)))
+    // ) {
+    //     const err = createErrorObject("pages, pagesRead, currentPage and rating must be numbers!", "failed", 400, true)
+    //     return next(err)
+    // }
 
-    if (((reqBody.status !== undefined) && (!["planned", "completed", "reading"].includes(reqBody?.status)))) {
-        const err = createErrorObject(`only [planned, reading, completed] allowed !`,"failed", 400, true)
-        return next(err)
-    }
+    // if (((reqBody.status !== undefined) && (!["planned", "completed", "reading"].includes(reqBody?.status)))) {
+    //     const err = createErrorObject(`only [planned, reading, completed] allowed !`,"failed", 400, true)
+    //     return next(err)
+    // }
 
     next()
 }

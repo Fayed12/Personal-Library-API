@@ -11,6 +11,7 @@ const developmentError = (err, res) => {
 }
 
 const productionError = (err, res) => {
+    console.log(err)
     if (err?.isOperational) {
         return res.status(err.statusCode || 500).json({
             status: err.status || "failed",
@@ -32,6 +33,29 @@ const handleCastError = (err) => {
     return error;
 }
 
+const handleValidationError = (err) => {
+    const errors = Object.values(err.errors).map(val => `${val.path}: ${val.message}`)
+
+    const message = errors.join(". ")
+
+    const error = createErrorObject(message, "failed", 400, true)
+
+    return error
+}
+
+const handleDuplicateError = (err) => {
+    // get the filed name that make the error
+    const field = Object.keys(err?.keyValue).at(0)
+
+    // get this filed value
+    const value = err.keyValue[field]
+
+    const message = ` ${field}: "${value}" already exists.`
+    const error = createErrorObject(message, "failed", 409, true)
+
+    return error
+}
+
 const errorController = (err, req, res, next) => {
     const projectStatus = process.env.NODE_ENV || "development"
 
@@ -39,13 +63,26 @@ const errorController = (err, req, res, next) => {
     if (projectStatus === "development") {
         return developmentError(err, res)
 
-    // 2- handle production errors
+        // 2- handle production errors
     } else if (projectStatus === "production") {
+        let error = err;
 
         // 2.1- handle cast errors, you can use the production res, but i need to create unique and clear message to user form cast error
-        const error = err.name === "CastError"
-            ? handleCastError(err)
-            : err;
+        if (err.name === "CastError") {
+            error = handleCastError(err)
+        }
+
+        // 2.2- handle validation errors and replace the validation from middleware in book router to here to make it in central error middleware
+        if (err.name === "ValidationError") {
+            error = handleValidationError(err)
+        }
+
+        // 2.3- handle duplicate error from mongoDB
+        if (err.code) {
+            if (err.code === 11000) {
+                error = handleDuplicateError(err)
+            }
+        }
 
         return productionError(error, res)
     }

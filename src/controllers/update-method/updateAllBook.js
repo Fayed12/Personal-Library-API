@@ -28,7 +28,7 @@ const updateAllBook = async (req, res, next) => {
             throw err
         }
 
-        await Book.findById(req.params.id);
+        const book = await Book.findById(req.params.id);
 
         Object.assign(book, reqBody)
 
