@@ -4,6 +4,7 @@ const createErrorObject = require("../../services/errorObject")
 const developmentError = (err, res) => {
     return res.status(err.statusCode || 500).json({
         status: err.status || "failed",
+        time: new Date().toISOString(),
         error: err,
         message: err.message || "something went wrong",
         stack: err.stack
@@ -11,15 +12,16 @@ const developmentError = (err, res) => {
 }
 
 const productionError = (err, res) => {
-    console.log(err)
     if (err?.isOperational) {
         return res.status(err.statusCode || 500).json({
             status: err.status || "failed",
+            time: new Date().toISOString(),
             message: err.message || "something went wrong",
         })
     } else {
         return res.status(500).json({
             status: "failed",
+            time: new Date().toISOString(),
             message: "something went wrong!"
         })
     }
@@ -89,6 +91,7 @@ const errorController = (err, req, res, next) => {
 
     return res.status(500).json({
         status: "error",
+        time: new Date().toISOString(),
         message: "Something went wrong!"
     });
 }
